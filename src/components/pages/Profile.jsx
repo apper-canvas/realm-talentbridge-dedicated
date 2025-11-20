@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import candidateService from "@/services/api/candidateService";
-import { toast } from "react-hot-toast";
+import { toast } from "react-toastify";
 import ApperIcon from "@/components/ApperIcon";
 import ProfileSection from "@/components/molecules/ProfileSection";
 import Loading from "@/components/ui/Loading";
