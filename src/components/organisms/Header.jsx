@@ -30,8 +30,8 @@ const Header = () => {
             <div className="w-10 h-10 bg-gradient-to-br from-primary to-blue-600 rounded-lg flex items-center justify-center mr-3">
               <ApperIcon name="Briefcase" className="w-6 h-6 text-white" />
             </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
-              TalentBridge
+<span className="text-xl font-bold bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
+              Placement Services
             </span>
           </Link>
 

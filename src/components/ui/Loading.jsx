@@ -11,7 +11,7 @@ const Loading = () => {
           </div>
         </div>
         <div className="space-y-2">
-          <h3 className="text-xl font-semibold text-gray-900">Loading TalentBridge</h3>
+<h3 className="text-xl font-semibold text-gray-900">Loading Placement Services</h3>
           <p className="text-gray-600">Connecting opportunities...</p>
         </div>
       </div>
