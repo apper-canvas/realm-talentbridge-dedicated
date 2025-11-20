@@ -1,36 +1,39 @@
 const STORAGE_KEY = 'placement_services_saved_jobs';
 
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 class SavedJobService {
   constructor() {
-    this.savedJobIds = this.loadFromStorage();
+    this.loadSavedJobs();
   }
 
-  loadFromStorage() {
+  loadSavedJobs() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      return saved ? JSON.parse(saved) : [];
+      this.savedJobIds = saved ? JSON.parse(saved) : [];
     } catch (error) {
-      console.error('Error loading saved jobs:', error);
-      return [];
+      console.error('Failed to load saved jobs:', error);
+      this.savedJobIds = [];
     }
   }
 
-  saveToStorage() {
+  saveTo
+
+() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(this.savedJobIds));
     } catch (error) {
-      console.error('Error saving to storage:', error);
+      console.error('Failed to save jobs:', error);
     }
   }
 
   async getAll() {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await delay(100);
     return [...this.savedJobIds];
   }
 
   async save(jobId) {
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await delay(200);
     if (!this.savedJobIds.includes(jobId)) {
       this.savedJobIds.push(jobId);
       this.saveToStorage();
@@ -39,15 +42,25 @@ class SavedJobService {
   }
 
   async unsave(jobId) {
-    await new Promise(resolve => setTimeout(resolve, 100));
-    this.savedJobIds = this.savedJobIds.filter(id => id !== jobId);
-    this.saveToStorage();
+    await delay(200);
+    const index = this.savedJobIds.indexOf(jobId);
+    if (index > -1) {
+      this.savedJobIds.splice(index, 1);
+      this.saveToStorage();
+    }
     return true;
   }
 
   async isSaved(jobId) {
-    await new Promise(resolve => setTimeout(resolve, 50));
+    await delay(50);
     return this.savedJobIds.includes(jobId);
+  }
+
+  async clear() {
+    await delay(100);
+    this.savedJobIds = [];
+    this.saveToStorage();
+    return true;
   }
 }
 

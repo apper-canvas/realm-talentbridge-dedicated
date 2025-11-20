@@ -8,8 +8,8 @@ import Empty from "@/components/ui/Empty";
 import ErrorView from "@/components/ui/ErrorView";
 import Button from "@/components/atoms/Button";
 
-const JobList = ({ searchTerm, filters, onRemoveFromSaved, savedJobs }) => {
-const [jobs, setJobs] = useState([]);
+const JobList = ({ searchTerm, filters, onRemoveFromSaved, savedJobs, jobs: propJobs }) => {
+  const [jobs, setJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -28,9 +28,9 @@ const [jobs, setJobs] = useState([]);
     } finally {
       setLoading(false);
     }
-  };
+};
 
-const handleSaveToggle = async (jobId) => {
+  const handleSaveToggle = async (jobId) => {
     try {
       if (savedJobIds.includes(jobId)) {
         await savedJobService.unsave(jobId);
@@ -44,11 +44,15 @@ const handleSaveToggle = async (jobId) => {
     }
   };
 
-  useEffect(() => {
-    loadJobs();
-  }, []);
-
 useEffect(() => {
+    if (!savedJobs && !propJobs) {
+      loadJobs();
+    } else if (propJobs) {
+      setJobs(propJobs);
+    }
+  }, [savedJobs, propJobs]);
+
+  useEffect(() => {
     const loadSavedJobs = async () => {
       try {
         const savedJobIds = await savedJobService.getAll();
@@ -60,6 +64,7 @@ useEffect(() => {
     
     loadSavedJobs();
   }, []);
+}, []);
 
   useEffect(() => {
     let filtered = [...jobs];
@@ -204,21 +209,21 @@ useEffect(() => {
             )}
           </div>
         )}
-      </div>
+</div>
 
       {/* Job Grid */}
-<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        {paginatedJobs.map((job) => (
-<JobCard 
-            key={job.Id} 
-            job={job} 
-            isSaved={savedJobIds.includes(job.Id)}
-            onSaveToggle={handleSaveToggle}
-            onRemoveFromSaved={onRemoveFromSaved}
-            showRemoveButton={savedJobs}
-          />
-        ))}
-      </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          {paginatedJobs.map((job) => (
+            <JobCard 
+              key={job.Id} 
+              job={job} 
+              isSaved={savedJobIds.includes(job.Id)}
+              onSaveToggle={handleSaveToggle}
+              onRemoveFromSaved={onRemoveFromSaved}
+              showRemoveButton={savedJobs}
+            />
+          ))}
+        </div>
 
       {/* Pagination */}
       {totalPages > 1 && (

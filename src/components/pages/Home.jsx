@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import SearchBar from "@/components/molecules/SearchBar";
-import FilterPanel from "@/components/molecules/FilterPanel";
-import JobList from "@/components/organisms/JobList";
-import ApperIcon from "@/components/ApperIcon";
-import Button from "@/components/atoms/Button";
 import { useNavigate } from "react-router-dom";
+import ApperIcon from "@/components/ApperIcon";
+import FilterPanel from "@/components/molecules/FilterPanel";
+import SearchBar from "@/components/molecules/SearchBar";
+import Profile from "@/components/pages/Profile";
+import JobList from "@/components/organisms/JobList";
+import Button from "@/components/atoms/Button";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -35,16 +36,17 @@ const Home = () => {
     setSearchTerm("");
   };
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+return (
+    <>
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-primary via-blue-600 to-indigo-600 text-white">
+      <div className="bg-gradient-to-r from-primary via-orange-600 to-red-600 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-orange-100 bg-clip-text text-transparent">
               Find Your Perfect Job
             </h1>
-            <p className="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl text-orange-100 max-w-3xl mx-auto leading-relaxed">
+              Connect with top employers and discover opportunities that match your skills and aspirations
               Connect with top employers and discover opportunities that match your skills and aspirations
             </p>
           </div>
@@ -120,13 +122,13 @@ const Home = () => {
             Create your profile and start applying to jobs that match your career goals
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
+<Button
               size="lg"
               onClick={() => navigate("/profile")}
-              className="bg-gradient-to-r from-primary to-blue-600 hover:from-blue-600 hover:to-blue-700"
+              className="bg-gradient-to-r from-primary to-orange-600 hover:from-orange-600 hover:to-orange-700"
             >
-              <ApperIcon name="User" className="w-5 h-5 mr-2" />
-              Create Profile
+              <ApperIcon name="User" className="mr-2" size={20} />
+              Complete Your Profile
             </Button>
             <Button
               size="lg"
@@ -140,7 +142,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-    </div>
+</>
   );
 };
 

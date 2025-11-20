@@ -5,8 +5,8 @@ import Layout from "@/components/organisms/Layout";
 // Lazy load all page components
 const Home = lazy(() => import("@/components/pages/Home"));
 const JobDetail = lazy(() => import("@/components/pages/JobDetail"));
-const Profile = lazy(() => import("@/components/pages/Profile"));
 const Applications = lazy(() => import("@/components/pages/Applications"));
+const Profile = lazy(() => import("@/components/pages/Profile"));
 const SavedJobs = lazy(() => import("@/components/pages/SavedJobs"));
 const PostJob = lazy(() => import("@/components/pages/PostJob"));
 const NotFound = lazy(() => import("@/components/pages/NotFound"));
@@ -40,14 +40,14 @@ const mainRoutes = [
   {
     path: "jobs/:id",
     element: <SuspenseWrapper><JobDetail /></SuspenseWrapper>
-  },
+},
   {
     path: "saved-jobs",
     element: <SuspenseWrapper><SavedJobs /></SuspenseWrapper>
   },
   {
-    path: "profile",
-    element: <SuspenseWrapper><Profile /></SuspenseWrapper>
+    path: "post-job",
+    element: <SuspenseWrapper><PostJob /></SuspenseWrapper>
   },
   {
     path: "applications",

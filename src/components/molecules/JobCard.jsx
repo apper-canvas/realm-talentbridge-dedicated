@@ -1,15 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { formatDistanceToNow } from "date-fns";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
-import Badge from "@/components/atoms/Badge";
 import Card from "@/components/atoms/Card";
-import { formatDistanceToNow } from "date-fns";
+import Badge from "@/components/atoms/Badge";
 
-const JobCard = ({ job, onToggleSave, isSaved = false }) => {
+const JobCard = ({ job, onSaveToggle, onRemoveFromSaved, isSaved = false, showRemoveButton = false }) => {
   const navigate = useNavigate();
-
   const handleViewDetails = () => {
     navigate(`/jobs/${job.Id}`);
   };
@@ -80,13 +79,27 @@ const JobCard = ({ job, onToggleSave, isSaved = false }) => {
               <div className="text-sm text-gray-500">
                 {formatDistanceToNow(new Date(job.postedDate), { addSuffix: true })}
               </div>
-            </div>
-            {/* Bookmark Button */}
-            {onToggleSave && (
+</div>
+          
+          <div className="flex items-center gap-2">
+            {showRemoveButton && onRemoveFromSaved && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  onToggleSave(job.Id);
+                  onRemoveFromSaved(job.Id);
+                }}
+                className="p-2 rounded-full text-red-500 hover:bg-red-50 transition-colors duration-200"
+                aria-label="Remove from saved jobs"
+              >
+                <ApperIcon name="X" size={16} />
+              </button>
+            )}
+            
+            {onSaveToggle && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onSaveToggle(job.Id);
                   toast.success(isSaved ? "Job removed from saved jobs" : "Job saved for later");
                 }}
                 className={`p-2 rounded-full transition-colors duration-200 ${
@@ -97,7 +110,7 @@ const JobCard = ({ job, onToggleSave, isSaved = false }) => {
                 aria-label={isSaved ? "Remove from saved jobs" : "Save job"}
               >
                 <ApperIcon 
-                  name={isSaved ? "Bookmark" : "Bookmark"} 
+                  name="Bookmark" 
                   size={20}
                   className={isSaved ? "fill-current" : ""}
                 />
@@ -105,6 +118,7 @@ const JobCard = ({ job, onToggleSave, isSaved = false }) => {
             )}
           </div>
         </div>
+      </div>
         
 
         <div className="flex flex-wrap gap-2 mb-4">

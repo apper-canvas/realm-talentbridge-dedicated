@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { candidateService } from "@/services/api/candidateService";
-import { toast } from "react-toastify";
 import ApperIcon from "@/components/ApperIcon";
 import ProfileSection from "@/components/molecules/ProfileSection";
 import Loading from "@/components/ui/Loading";
@@ -11,6 +10,7 @@ import Card from "@/components/atoms/Card";
 import Badge from "@/components/atoms/Badge";
 import Input from "@/components/atoms/Input";
 import Textarea from "@/components/atoms/Textarea";
+import { toast } from "react-hot-toast";
 
 const Profile = () => {
   const [candidate, setCandidate] = useState(null);
@@ -23,8 +23,7 @@ const Profile = () => {
   const loadProfile = async () => {
     setLoading(true);
     setError("");
-    try {
-      const profile = await candidateService.getProfile();
+const profile = await candidateService.getProfile();
       if (profile) {
         setCandidate(profile);
         setFormData(profile);
@@ -35,7 +34,6 @@ const Profile = () => {
           email: "",
           phone: "",
           location: "",
-          profileSummary: "",
           skills: [],
           experience: [],
           education: [],
@@ -127,16 +125,43 @@ const Profile = () => {
       ...formData,
       education: currentEducation.filter((_, i) => i !== index)
     });
-  };
+};
 
   const handleResumeUpload = async (file) => {
     if (file) {
-      // Simulate file upload - in a real app, this would upload to a server
+      // Simulate file upload and resume parsing
       const resumeUrl = `uploads/${file.name}`;
-      setFormData({ ...formData, resumeUrl });
-      toast.success("Resume uploaded successfully!");
+      
+      // Simulate resume parsing with auto-population
+      const parsedData = {
+        resumeUrl,
+        fullName: formData.fullName || "John Doe", // Would be extracted from resume
+        email: formData.email || "john.doe@email.com", // Would be extracted from resume
+        phone: formData.phone || "+1 (555) 123-4567", // Would be extracted from resume
+        location: formData.location || "New York, NY", // Would be extracted from resume
+        skills: formData.skills.length > 0 ? formData.skills : ["JavaScript", "React", "Node.js"], // Would be extracted from resume
+        experience: formData.experience.length > 0 ? formData.experience : [
+          {
+            company: "Tech Corp",
+            position: "Software Developer",
+            duration: "2020 - 2023",
+            description: "Developed web applications using React and Node.js"
+          }
+        ],
+        education: formData.education.length > 0 ? formData.education : [
+          {
+            institution: "University of Technology",
+            degree: "Bachelor of Computer Science",
+            year: "2020",
+            gpa: "3.8"
+          }
+        ]
+      };
+      
+      setFormData({ ...formData, ...parsedData });
+      toast.success("Resume uploaded and profile auto-populated!");
     }
-  };
+};
 
   if (loading) {
     return <Loading />;
@@ -172,25 +197,24 @@ const Profile = () => {
 
     return Math.round((completed / total) * 100);
   };
-
 return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-100">
       <div className="container mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">My Profile</h1>
-          <div className="flex items-center gap-4">
-<div className="flex-1 bg-gray-200 rounded-full h-2">
-                <div
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-gray-900 mb-4">My Profile</h1>
+            <div className="flex flex-col items-center gap-2">
+              <div className="w-full max-w-md bg-gray-200 rounded-full h-2">
+                <div 
                   className="bg-gradient-to-r from-primary to-orange-600 h-2 rounded-full transition-all duration-300"
                   style={{ width: `${profileCompleteness()}%` }}
                 />
+              </div>
+              <span className="text-sm text-gray-600">
+                {profileCompleteness()}% Complete
+              </span>
             </div>
-            <span className="text-sm font-medium text-gray-600">
-              {profileCompleteness()}% Complete
-            </span>
           </div>
-        </div>
 
         <div className="space-y-8">
           {/* Personal Information */}
@@ -252,16 +276,21 @@ return (
             )}
           </ProfileSection>
 
-          {/* Resume Upload */}
-          <ProfileSection title="Resume" icon="FileText">
+{/* Resume Upload */}
+          <Card>
             <div className="space-y-4">
-              {candidate?.resumeUrl ? (
+              <h3 className="text-lg font-semibold text-gray-900 flex items-center">
+                <ApperIcon name="FileText" className="w-5 h-5 mr-2 text-primary" />
+                Resume & Auto-Population
+              </h3>
+              
+              {formData?.resumeUrl ? (
                 <div className="flex items-center justify-between p-4 bg-green-50 border border-green-200 rounded-lg">
                   <div className="flex items-center">
                     <ApperIcon name="File" className="w-5 h-5 text-green-600 mr-3" />
                     <div>
-                      <p className="font-medium text-green-900">Resume uploaded</p>
-                      <p className="text-sm text-green-700">{candidate.resumeUrl}</p>
+                      <p className="font-medium text-green-900">Resume uploaded & parsed</p>
+                      <p className="text-sm text-green-700">{formData.resumeUrl}</p>
                     </div>
                   </div>
                   <Button variant="outline" size="sm">
@@ -273,7 +302,7 @@ return (
                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
                   <ApperIcon name="Upload" className="w-12 h-12 text-gray-400 mx-auto mb-4" />
                   <h3 className="text-lg font-medium text-gray-900 mb-2">Upload your resume</h3>
-                  <p className="text-gray-600 mb-4">PDF files only, max 10MB</p>
+                  <p className="text-gray-600 mb-4">PDF files only, max 10MB. We'll automatically populate your profile!</p>
                   <input
                     type="file"
                     accept=".pdf"
@@ -290,7 +319,7 @@ return (
                 </div>
               )}
             </div>
-          </ProfileSection>
+          </Card>
 
           {/* Profile Summary */}
           <ProfileSection
