@@ -60,7 +60,6 @@ const JobCard = ({ job, onToggleSave, isSaved = false }) => {
       <div className="flex flex-col h-full">
 <div className="flex items-start justify-between mb-4">
           <div className="flex-1">
-            <h3 className="text-lg font-semibold text-gray-900 mb-1">{job.title}</h3>
             <p className="text-gray-600 mb-2">{job.company}</p>
           </div>
           
