@@ -46,8 +46,6 @@ const loadProfile = async () => {
       }
     } catch (err) {
       setError("Failed to load profile. Please try again.");
-    } finally {
-      setLoading(false);
 } finally {
       setLoading(false);
     }
