@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { candidateService } from "@/services/api/candidateService";
+import { toast } from "react-toastify";
 import ApperIcon from "@/components/ApperIcon";
-import Button from "@/components/atoms/Button";
-import Input from "@/components/atoms/Input";
-import Select from "@/components/atoms/Select";
-import Textarea from "@/components/atoms/Textarea";
-import Card from "@/components/atoms/Card";
-import Badge from "@/components/atoms/Badge";
 import ProfileSection from "@/components/molecules/ProfileSection";
 import Loading from "@/components/ui/Loading";
 import ErrorView from "@/components/ui/ErrorView";
-import { candidateService } from "@/services/api/candidateService";
-import { toast } from "react-toastify";
+import Select from "@/components/atoms/Select";
+import Button from "@/components/atoms/Button";
+import Card from "@/components/atoms/Card";
+import Badge from "@/components/atoms/Badge";
+import Input from "@/components/atoms/Input";
+import Textarea from "@/components/atoms/Textarea";
 
 const Profile = () => {
   const [candidate, setCandidate] = useState(null);
@@ -173,18 +173,18 @@ const Profile = () => {
     return Math.round((completed / total) * 100);
   };
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+return (
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-100">
+      <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-4">My Profile</h1>
           <div className="flex items-center gap-4">
-            <div className="flex-1 bg-gray-200 rounded-full h-2">
-              <div
-                className="bg-gradient-to-r from-primary to-blue-600 h-2 rounded-full transition-all duration-300"
-                style={{ width: `${profileCompleteness()}%` }}
-              ></div>
+<div className="flex-1 bg-gray-200 rounded-full h-2">
+                <div
+                  className="bg-gradient-to-r from-primary to-orange-600 h-2 rounded-full transition-all duration-300"
+                  style={{ width: `${profileCompleteness()}%` }}
+                />
             </div>
             <span className="text-sm font-medium text-gray-600">
               {profileCompleteness()}% Complete
@@ -332,10 +332,10 @@ const Profile = () => {
                 onRemove={(index) => handleArrayRemove("skills", index)}
               />
             ) : (
-              <div className="flex flex-wrap gap-2">
+<div className="flex flex-wrap gap-2">
                 {candidate?.skills && candidate.skills.length > 0 ? (
                   candidate.skills.map((skill, index) => (
-                    <Badge key={index} variant="primary">
+                    <Badge key={index} variant="secondary">
                       {skill}
                     </Badge>
                   ))
@@ -362,11 +362,11 @@ const Profile = () => {
                 onRemove={handleExperienceRemove}
               />
             ) : (
-              <div className="space-y-6">
+<div className="space-y-6">
                 {candidate?.experience && candidate.experience.length > 0 ? (
                   candidate.experience.map((exp, index) => (
                     <div key={index} className="border-l-4 border-primary pl-4">
-                      <h3 className="font-semibold text-gray-900">{exp.position}</h3>
+                      <h4 className="font-semibold text-gray-900">{exp.position}</h4>
                       <p className="text-primary font-medium">{exp.company}</p>
                       <p className="text-sm text-gray-600 mb-2">
                         {exp.startDate} - {exp.current ? "Present" : exp.endDate}
@@ -399,12 +399,12 @@ const Profile = () => {
                 onRemove={handleEducationRemove}
               />
             ) : (
-              <div className="space-y-4">
+<div className="space-y-4">
                 {candidate?.education && candidate.education.length > 0 ? (
                   candidate.education.map((edu, index) => (
-                    <div key={index} className="border-l-4 border-accent pl-4">
-                      <h3 className="font-semibold text-gray-900">{edu.degree}</h3>
-                      <p className="text-accent font-medium">{edu.institution}</p>
+                    <div key={index} className="border-l-4 border-primary pl-4">
+                      <h4 className="font-semibold text-gray-900">{edu.degree}</h4>
+                      <p className="text-primary font-medium">{edu.institution}</p>
                       <p className="text-sm text-gray-600">
                         {edu.field} • {edu.graduationYear}
                       </p>
@@ -454,13 +454,14 @@ const SkillsEditor = ({ skills, onAdd, onRemove }) => {
           <ApperIcon name="Plus" className="w-4 h-4" />
         </Button>
       </div>
-      <div className="flex flex-wrap gap-2">
+<div className="flex flex-wrap gap-2">
         {skills.map((skill, index) => (
-          <Badge key={index} variant="primary" className="flex items-center">
+          <Badge key={index} variant="secondary" className="flex items-center">
             {skill}
             <button
+              type="button"
+              className="ml-2 text-gray-500 hover:text-gray-700"
               onClick={() => onRemove(index)}
-              className="ml-2 text-primary/60 hover:text-primary"
             >
               <ApperIcon name="X" className="w-3 h-3" />
             </button>
@@ -502,9 +503,9 @@ const ExperienceEditor = ({ experience, onAdd, onRemove }) => {
   return (
     <div className="space-y-6">
       {experience.map((exp, index) => (
-        <div key={index} className="flex items-start justify-between p-4 bg-gray-50 rounded-lg">
+<div key={index} className="flex items-start justify-between p-4 bg-gray-50 rounded-lg">
           <div className="flex-1">
-            <h3 className="font-semibold text-gray-900">{exp.position}</h3>
+            <h4 className="font-semibold text-gray-900">{exp.position}</h4>
             <p className="text-primary font-medium">{exp.company}</p>
             <p className="text-sm text-gray-600 mb-2">
               {exp.startDate} - {exp.current ? "Present" : exp.endDate}
@@ -616,10 +617,10 @@ const EducationEditor = ({ education, onAdd, onRemove }) => {
   return (
     <div className="space-y-6">
       {education.map((edu, index) => (
-        <div key={index} className="flex items-start justify-between p-4 bg-gray-50 rounded-lg">
+<div key={index} className="flex items-start justify-between p-4 bg-gray-50 rounded-lg">
           <div className="flex-1">
-            <h3 className="font-semibold text-gray-900">{edu.degree}</h3>
-            <p className="text-accent font-medium">{edu.institution}</p>
+            <h4 className="font-semibold text-gray-900">{edu.degree}</h4>
+            <p className="text-primary font-medium">{edu.institution}</p>
             <p className="text-sm text-gray-600">
               {edu.field} • {edu.graduationYear}
             </p>

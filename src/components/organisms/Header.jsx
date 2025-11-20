@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 
@@ -26,11 +26,11 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center">
+<Link to="/" className="flex items-center">
             <div className="w-10 h-10 bg-gradient-to-br from-primary to-blue-600 rounded-lg flex items-center justify-center mr-3">
               <ApperIcon name="Briefcase" className="w-6 h-6 text-white" />
             </div>
-<span className="text-xl font-bold bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
+            <span className="text-xl font-bold bg-gradient-to-r from-primary to-orange-600 bg-clip-text text-transparent">
               Placement Services
             </span>
           </Link>
@@ -41,10 +41,10 @@ const Header = () => {
               <Link
                 key={item.name}
                 to={item.href}
-                className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
                   isActive(item.href)
-                    ? "bg-gradient-to-r from-primary/10 to-blue-600/10 text-primary border border-primary/20"
-                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                    ? "bg-gradient-to-r from-primary/10 to-orange-600/10 text-primary border border-primary/20"
+                    : "text-gray-700 hover:text-primary hover:bg-primary/5"
                 }`}
               >
                 <ApperIcon name={item.icon} className="w-4 h-4 mr-2" />
@@ -74,10 +74,10 @@ const Header = () => {
                   key={item.name}
                   to={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`flex items-center px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 ${
+className={`block px-4 py-3 font-medium transition-colors ${
                     isActive(item.href)
-                      ? "bg-gradient-to-r from-primary/10 to-blue-600/10 text-primary border border-primary/20"
-                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                      ? "bg-gradient-to-r from-primary/10 to-orange-600/10 text-primary border border-primary/20"
+                      : "text-gray-700 hover:text-primary hover:bg-primary/5"
                   }`}
                 >
                   <ApperIcon name={item.icon} className="w-5 h-5 mr-3" />

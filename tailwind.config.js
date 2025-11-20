@@ -9,16 +9,16 @@ export default {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
       },
-      colors: {
-        primary: '#2563EB',
+colors: {
+        primary: '#EA580C',
         secondary: '#475569',
-        accent: '#F59E0B',
+        accent: '#EA580C',
         surface: '#FFFFFF',
         background: '#F8FAFC',
-        success: '#10B981',
-        warning: '#F59E0B',
+success: '#10B981',
+        warning: '#EA580C',
         error: '#EF4444',
-        info: '#3B82F6',
+        info: '#EA580C',
       },
       boxShadow: {
         'card': '0 2px 8px rgba(0,0,0,0.08)',
