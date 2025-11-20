@@ -10,6 +10,9 @@ import Button from "@/components/atoms/Button";
 import Card from "@/components/atoms/Card";
 import Badge from "@/components/atoms/Badge";
 
+
+// RecommendationJobCard is defined at the bottom of the file
+
 const JobList = ({ searchTerm, filters, onRemoveFromSaved, savedJobs, jobs: propJobs, isRecommendationMode = false }) => {
 const [jobs, setJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
@@ -177,14 +180,27 @@ onRetry={loadJobs}
 );
 }
 
-  if (filteredJobs.length === 0 && jobs.length > 0 && !isRecommendationMode) {
-    return (
-      <div className="text-center py-12">
-        <ApperIcon name="Search" className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-        <h3 className="text-lg font-semibold text-gray-900 mb-2">No jobs found</h3>
-        <p className="text-gray-600">We couldn't find any jobs matching your search criteria. Try adjusting your filters or search terms.</p>
-      </div>
-    );
+// Handle empty states
+  if (filteredJobs.length === 0) {
+    if (jobs.length > 0 && !isRecommendationMode) {
+      // No results from filtering
+      return (
+        <div className="text-center py-12">
+          <ApperIcon name="Search" className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">No jobs found</h3>
+          <p className="text-gray-600">We couldn't find any jobs matching your search criteria. Try adjusting your filters or search terms.</p>
+        </div>
+      );
+    } else {
+      // No jobs available at all
+      return (
+        <Empty
+          icon="Briefcase"
+          title="No jobs available"
+          message="There are currently no job listings available. Please check back later."
+        />
+      );
+    }
   }
 
   const displayJobs = isRecommendationMode ? filteredJobs : paginatedJobs;
@@ -198,14 +214,16 @@ onRetry={loadJobs}
             {isRecommendationMode ? (
               <RecommendationJobCard 
                 job={job}
-                onSaveToggle={() => {}}
-                isSaved={false}
+onSaveToggle={handleSaveToggle}
+                isSaved={savedJobIds.includes(job.Id)}
               />
             ) : (
               <JobCard 
                 job={job}
-                onSaveToggle={() => {}}
-                isSaved={false}
+                onSaveToggle={handleSaveToggle}
+                isSaved={savedJobIds.includes(job.Id)}
+                onRemoveFromSaved={onRemoveFromSaved}
+                showRemoveButton={savedJobs}
               />
             )}
           </div>
@@ -252,7 +270,6 @@ onRetry={loadJobs}
 
 // Recommendation-specific job card component
 const RecommendationJobCard = ({ job, onSaveToggle, isSaved }) => {
-
   const getMatchScoreColor = (score) => {
     if (score >= 80) return 'text-green-600 bg-green-50 border-green-200';
     if (score >= 60) return 'text-blue-600 bg-blue-50 border-blue-200';
@@ -326,108 +343,19 @@ const RecommendationJobCard = ({ job, onSaveToggle, isSaved }) => {
           </p>
         </div>
 
-{/* Action Button */}
-<Button
-onClick={() => window.open(`/jobs/${job.Id}`, '_blank')}
-className="w-full"
->
-View Details
-<ApperIcon name="ArrowRight" className="w-4 h-4 ml-2" />
-</Button>
-</div>
-</Card>
-);
+        {/* Action Button */}
+        <Button
+          onClick={() => window.open(`/jobs/${job.Id}`, '_blank')}
+          className="w-full"
+        >
+          View Details
+          <ApperIcon name="ArrowRight" className="w-4 h-4 ml-2" />
+        </Button>
+      </div>
+    </Card>
+  );
 };
 
-if (filteredJobs.length === 0) {
-return (
-<Empty
-icon="Briefcase"
-title="No jobs available"
-message="There are currently no job listings available. Please check back later."
-/>
-);
-}
-
-return (
-<div className="space-y-6">
-{/* Results Header */}
-<div className="flex items-center justify-between">
-<div className="text-sm text-gray-600">
-Showing {((currentPage - 1) * itemsPerPage) + 1}-{Math.min(currentPage * itemsPerPage, filteredJobs.length)} of {filteredJobs.length} jobs
-</div>
-{(searchTerm || Object.values(filters || {}).some(f => f && f !== "all")) && (
-<div className="text-sm text-gray-600">
-{searchTerm && (
-<span>Search: "{searchTerm}" </span>
-)}
-{Object.values(filters || {}).some(f => f && f !== "all") && (
-<span>• Filters applied</span>
-)}
-</div>
-)}
-</div>
-
-{/* Job Grid */}
-<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-{paginatedJobs.map((job) => (
-<JobCard 
-key={job.Id} 
-job={job} 
-isSaved={savedJobIds.includes(job.Id)}
-onSaveToggle={handleSaveToggle}
-onRemoveFromSaved={onRemoveFromSaved}
-showRemoveButton={savedJobs}
-/>
-))}
-</div>
-
-{/* Pagination */}
-{totalPages > 1 && (
-<div className="flex items-center justify-center space-x-2 pt-8">
-<Button
-variant="outline"
-size="sm"
-onClick={() => handlePageChange(currentPage - 1)}
-disabled={currentPage === 1}
->
-<ApperIcon name="ChevronLeft" className="w-4 h-4" />
-</Button>
-
-{Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
-if (
-page === 1 ||
-page === totalPages ||
-(page >= currentPage - 1 && page <= currentPage + 1)
-) {
-return (
-<Button
-key={page}
-variant={currentPage === page ? "primary" : "outline"}
-size="sm"
-onClick={() => handlePageChange(page)}
->
-{page}
-</Button>
-);
-} else if (page === currentPage - 2 || page === currentPage + 2) {
-return <span key={page} className="px-2 text-gray-500">...</span>;
-}
-return null;
-})}
-
-<Button
-variant="outline"
-size="sm"
-onClick={() => handlePageChange(currentPage + 1)}
-disabled={currentPage === totalPages}
->
-<ApperIcon name="ArrowRight" className="w-4 h-4" />
-</Button>
-</div>
-)}
-</div>
-);
-};
+export default JobList;
 
 export default JobList;
