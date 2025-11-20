@@ -53,9 +53,13 @@ const mainRoutes = [
     path: "applications",
     element: <SuspenseWrapper><Applications /></SuspenseWrapper>
   },
-  {
+{
     path: "post-job",
     element: <SuspenseWrapper><PostJob /></SuspenseWrapper>
+  },
+  {
+    path: "profile",
+    element: <SuspenseWrapper><Profile /></SuspenseWrapper>
   },
   {
     path: "*",
