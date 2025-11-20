@@ -17,9 +17,7 @@ class SavedJobService {
     }
   }
 
-  saveTo
-
-() {
+saveToStorage() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(this.savedJobIds));
     } catch (error) {

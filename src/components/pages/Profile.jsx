@@ -129,8 +129,11 @@ const Profile = () => {
     });
   };
 
-  const handleResumeUpload = async (file) => {
+const handleResumeUpload = async (file) => {
     if (file) {
+      // Store the actual file for download functionality
+      setResumeFile(file);
+      
       // Simulate file upload and resume parsing
       const resumeUrl = `uploads/${file.name}`;
       
@@ -162,6 +165,37 @@ const Profile = () => {
       
       setFormData({ ...formData, ...parsedData });
       toast.success("Resume uploaded and profile auto-populated!");
+    }
+  };
+
+  const handleResumeDownload = () => {
+    try {
+      if (resumeFile) {
+        // Create blob URL and trigger download for uploaded file
+        const url = URL.createObjectURL(resumeFile);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = resumeFile.name;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        toast.success("Resume downloaded successfully!");
+      } else if (formData?.resumeUrl) {
+        // Fallback for existing resume URL
+        const link = document.createElement('a');
+        link.href = formData.resumeUrl;
+        link.download = formData.resumeUrl.split('/').pop();
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        toast.success("Resume downloaded successfully!");
+      } else {
+        toast.error("No resume available for download");
+      }
+    } catch (error) {
+      console.error('Download failed:', error);
+      toast.error("Failed to download resume. Please try again.");
     }
   };
 
@@ -280,7 +314,7 @@ const Profile = () => {
             </ProfileSection>
 
             {/* Resume Upload */}
-            <Card>
+<Card>
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold text-gray-900 flex items-center">
                   <ApperIcon name="FileText" className="w-5 h-5 mr-2 text-primary" />
@@ -296,7 +330,11 @@ const Profile = () => {
                         <p className="text-sm text-green-700">{formData.resumeUrl}</p>
                       </div>
                     </div>
-                    <Button variant="outline" size="sm">
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={handleResumeDownload}
+                    >
                       <ApperIcon name="Download" className="w-4 h-4 mr-2" />
                       Download
                     </Button>
