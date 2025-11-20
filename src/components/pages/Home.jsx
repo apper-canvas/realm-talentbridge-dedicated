@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { recommendationService } from "@/services/api/recommendationService";
+import { notificationService } from "@/services/api/notificationService";
 import ApperIcon from "@/components/ApperIcon";
 import FilterPanel from "@/components/molecules/FilterPanel";
 import SearchBar from "@/components/molecules/SearchBar";
 import Profile from "@/components/pages/Profile";
 import JobList from "@/components/organisms/JobList";
 import Button from "@/components/atoms/Button";
-
 const Home = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
@@ -22,7 +22,7 @@ const Home = () => {
   const [profileComplete, setProfileComplete] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
 // Load personalized recommendations
-  const loadRecommendations = async () => {
+const loadRecommendations = async () => {
     setLoadingRecommendations(true);
     try {
       const [recs, isComplete] = await Promise.all([
@@ -31,14 +31,16 @@ const Home = () => {
       ]);
       setRecommendations(recs);
       setProfileComplete(isComplete);
+      
+      // Load notifications to ensure user sees job match alerts
+      await notificationService.getAll();
     } catch (error) {
       console.error('Error loading recommendations:', error);
     } finally {
       setLoadingRecommendations(false);
     }
   };
-
-  useEffect(() => {
+useEffect(() => {
     loadRecommendations();
   }, []);
   const handleSearch = (term) => {

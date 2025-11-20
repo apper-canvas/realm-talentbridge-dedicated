@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
-
+import NotificationIcon from "@/components/molecules/NotificationIcon";
+import NotificationCenter from "@/components/organisms/NotificationCenter";
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isNotificationCenterOpen, setIsNotificationCenterOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
-
 const navigation = [
     { name: "Browse Jobs", href: "/", icon: "Search" },
     { name: "Saved Jobs", href: "/saved-jobs", icon: "Bookmark" },
@@ -53,8 +55,12 @@ const navigation = [
             ))}
           </nav>
 
+          {/* Notification Icon */}
+          <NotificationIcon 
+            onClick={() => setIsNotificationCenterOpen(true)}
+          />
           {/* Mobile menu button */}
-          <button
+<button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="lg:hidden p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100"
           >
@@ -66,10 +72,10 @@ const navigation = [
         </div>
 
         {/* Mobile Navigation */}
-        {isMobileMenuOpen && (
+{isMobileMenuOpen && (
           <div className="lg:hidden border-t border-gray-200 pb-3">
             <nav className="flex flex-col space-y-1 pt-3">
-{navigation.map((item) => (
+              {navigation.map((item) => (
                 <Link
                   key={item.name}
                   to={item.href}
@@ -86,8 +92,15 @@ const navigation = [
             </nav>
           </div>
         )}
+
+        {/* Notification Center Modal */}
+        <NotificationCenter
+          isOpen={isNotificationCenterOpen}
+          onClose={() => setIsNotificationCenterOpen(false)}
+          onUnreadCountChange={setUnreadCount}
+        />
       </div>
-    </header>
+</header>
   );
 };
 

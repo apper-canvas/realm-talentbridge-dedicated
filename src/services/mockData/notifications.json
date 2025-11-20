@@ -1,0 +1,98 @@
+[
+  {
+    "Id": 1,
+    "type": "status_change",
+    "title": "Application Status Updated",
+    "message": "Your application for Senior Frontend Developer at TechFlow has been moved to Interview stage.",
+    "applicationId": 1,
+    "jobId": 1,
+    "isRead": false,
+    "createdAt": "2024-01-19T14:30:00Z",
+    "actionUrl": "/applications",
+    "priority": "high"
+  },
+  {
+    "Id": 2,
+    "type": "job_match",
+    "title": "New Job Match Found",
+    "message": "We found a new job that matches your profile: Product Manager at InnovateHub (89% match).",
+    "applicationId": null,
+    "jobId": 3,
+    "isRead": false,
+    "createdAt": "2024-01-19T12:15:00Z",
+    "actionUrl": "/job/3",
+    "priority": "medium"
+  },
+  {
+    "Id": 3,
+    "type": "status_change",
+    "title": "Application Under Review",
+    "message": "Great news! Your application for UX Designer at CreativeSpace is now under review by the hiring team.",
+    "applicationId": 2,
+    "jobId": 2,
+    "isRead": false,
+    "createdAt": "2024-01-19T10:45:00Z",
+    "actionUrl": "/applications",
+    "priority": "medium"
+  },
+  {
+    "Id": 4,
+    "type": "job_match",
+    "title": "Perfect Match Available",
+    "message": "New opportunity alert: Full Stack Engineer at DataDriven Solutions matches 95% of your criteria.",
+    "applicationId": null,
+    "jobId": 5,
+    "isRead": true,
+    "createdAt": "2024-01-18T16:20:00Z",
+    "actionUrl": "/job/5",
+    "priority": "high"
+  },
+  {
+    "Id": 5,
+    "type": "status_change",
+    "title": "Application Accepted",
+    "message": "Congratulations! Your application for Junior Developer at StartupPro has been accepted. The team will contact you soon.",
+    "applicationId": 3,
+    "jobId": 4,
+    "isRead": true,
+    "createdAt": "2024-01-18T09:30:00Z",
+    "actionUrl": "/applications",
+    "priority": "high"
+  },
+  {
+    "Id": 6,
+    "type": "job_match",
+    "title": "Recommended for You",
+    "message": "Based on your recent activity: Senior React Developer at WebCraft Studio (82% match) is now available.",
+    "applicationId": null,
+    "jobId": 6,
+    "isRead": true,
+    "createdAt": "2024-01-17T14:10:00Z",
+    "actionUrl": "/job/6",
+    "priority": "medium"
+  },
+  {
+    "Id": 7,
+    "type": "status_change",
+    "title": "Interview Scheduled",
+    "message": "Your interview for Marketing Manager at GrowthCorp has been scheduled for January 22nd at 2:00 PM.",
+    "applicationId": 4,
+    "jobId": 7,
+    "isRead": true,
+    "createdAt": "2024-01-17T11:25:00Z",
+    "actionUrl": "/applications",
+    "priority": "high"
+  },
+  {
+    "Id": 8,
+    "type": "job_match",
+    "title": "Multiple New Matches",
+    "message": "3 new jobs matching your profile are now available. Check them out before they're filled!",
+    "applicationId": null,
+    "jobId": null,
+    "isRead": true,
+    "createdAt": "2024-01-16T13:40:00Z",
+    "actionUrl": "/",
+    "priority": "medium"
+  }
+]

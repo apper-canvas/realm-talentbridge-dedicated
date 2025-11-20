@@ -1,5 +1,6 @@
 import { jobService } from "@/services/api/jobService";
 import { candidateService } from "@/services/api/candidateService";
+import { notificationService } from "@/services/api/notificationService";
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -136,7 +137,7 @@ class RecommendationService {
   }
 
   // Get personalized job recommendations for a candidate
-  async getRecommendations(limit = 6) {
+async getRecommendations(limit = 6) {
     await delay(400);
     
     try {
@@ -163,6 +164,31 @@ class RecommendationService {
         .filter(job => job.matchScore >= 30) // Only show jobs with reasonable match
         .sort((a, b) => b.matchScore - a.matchScore)
         .slice(0, limit);
+
+      // Create notifications for high-quality matches (85%+)
+      const highQualityMatches = recommendations.filter(job => job.matchScore >= 85);
+      
+      for (const job of highQualityMatches) {
+        try {
+          // Check if we already have a recent notification for this job
+          const existingNotifications = await notificationService.getNotificationsByType('job_match');
+          const hasRecentNotification = existingNotifications.some(n => 
+            n.jobId === job.Id && 
+            new Date(n.createdAt) > new Date(Date.now() - 24 * 60 * 60 * 1000) // Within 24 hours
+          );
+          
+          if (!hasRecentNotification) {
+            await notificationService.createJobMatchNotification(
+              job.Id,
+              job.title,
+              job.company,
+              Math.round(job.matchScore)
+            );
+          }
+        } catch (error) {
+          console.error('Error creating job match notification:', error);
+        }
+      }
 
       return recommendations;
     } catch (error) {
