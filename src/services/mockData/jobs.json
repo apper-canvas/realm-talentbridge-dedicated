@@ -1,0 +1,506 @@
+[
+  {
+    "Id": 1,
+    "title": "Senior Software Engineer",
+    "company": "TechFlow Solutions",
+    "location": "San Francisco, CA",
+    "jobType": "full-time",
+    "experienceLevel": "senior",
+    "salaryRange": {
+      "min": 140000,
+      "max": 180000
+    },
+    "description": "We are seeking a Senior Software Engineer to join our innovative team building next-generation enterprise software solutions. You'll work with cutting-edge technologies including React, Node.js, and AWS to create scalable applications that serve millions of users.\n\nAs a senior member of our engineering team, you'll mentor junior developers, participate in architectural decisions, and drive technical excellence across our products. We offer a collaborative environment where your ideas matter and your growth is prioritized.\n\nThis is an excellent opportunity for an experienced engineer who wants to make a significant impact while working with a talented team on challenging technical problems.",
+    "requirements": [
+      "5+ years of experience in software development",
+      "Expert knowledge of JavaScript, React, and Node.js",
+      "Experience with cloud platforms (AWS, Azure, or GCP)",
+      "Strong understanding of software architecture and design patterns",
+      "Experience with microservices and distributed systems",
+      "Proficiency in database design and optimization",
+      "Excellent problem-solving and communication skills"
+    ],
+    "responsibilities": [
+      "Design and develop scalable web applications",
+      "Lead technical discussions and architectural decisions",
+      "Mentor junior developers and conduct code reviews",
+      "Collaborate with product managers and designers",
+      "Optimize application performance and scalability",
+      "Participate in on-call rotation and incident response",
+      "Stay current with emerging technologies and best practices"
+    ],
+    "benefits": [
+      "Competitive salary and equity package",
+      "Comprehensive health, dental, and vision insurance",
+      "401(k) with company matching",
+      "Flexible PTO and sabbatical opportunities",
+      "Professional development budget",
+      "Remote work flexibility",
+      "Top-tier equipment and home office stipend"
+    ],
+    "postedDate": "2024-01-15T10:30:00Z",
+    "applicationCount": 42
+  },
+  {
+    "Id": 2,
+    "title": "Product Manager",
+    "company": "InnovateNow Inc",
+    "location": "New York, NY",
+    "jobType": "full-time",
+    "experienceLevel": "mid",
+    "salaryRange": {
+      "min": 110000,
+      "max": 140000
+    },
+    "description": "Join our product team as a Product Manager and drive the vision for our rapidly growing SaaS platform. You'll work closely with engineering, design, and sales teams to build features that delight our customers and drive business growth.\n\nIn this role, you'll own the product roadmap for key features, conduct user research, analyze data to make informed decisions, and collaborate with cross-functional teams to deliver exceptional user experiences.\n\nWe're looking for someone who combines strong analytical skills with excellent communication abilities and has a passion for building products that solve real customer problems.",
+    "requirements": [
+      "3-5 years of product management experience",
+      "Experience with SaaS or B2B software products",
+      "Strong analytical and data-driven decision making skills",
+      "Excellent written and verbal communication skills",
+      "Experience with product management tools (Jira, Confluence, etc.)",
+      "Understanding of agile development methodologies",
+      "Bachelor's degree in Business, Engineering, or related field"
+    ],
+    "responsibilities": [
+      "Define and own product roadmap and strategy",
+      "Gather and prioritize product requirements",
+      "Work closely with engineering and design teams",
+      "Conduct user research and market analysis",
+      "Define success metrics and track product performance",
+      "Communicate product vision to stakeholders",
+      "Manage product launches and go-to-market strategies"
+    ],
+    "benefits": [
+      "Competitive salary and performance bonuses",
+      "Stock options with high growth potential",
+      "Premium health and wellness benefits",
+      "Flexible work arrangements",
+      "Learning and development opportunities",
+      "Team building events and company retreats",
+      "Modern office in Manhattan with great perks"
+    ],
+    "postedDate": "2024-01-14T14:20:00Z",
+    "applicationCount": 28
+  },
+  {
+    "Id": 3,
+    "title": "UX Designer",
+    "company": "DesignFirst Agency",
+    "location": "Remote",
+    "jobType": "contract",
+    "experienceLevel": "mid",
+    "salaryRange": {
+      "min": 70,
+      "max": 90
+    },
+    "description": "We're seeking a talented UX Designer to join our creative team on exciting client projects. You'll work on diverse design challenges ranging from mobile apps to enterprise software, creating user-centered solutions that drive business results.\n\nAs part of our design team, you'll conduct user research, create wireframes and prototypes, collaborate with clients and development teams, and ensure all designs meet accessibility standards.\n\nThis contract position offers flexibility and the opportunity to work with a variety of clients across different industries while building your portfolio with impactful design work.",
+    "requirements": [
+      "3+ years of UX design experience",
+      "Proficiency in Figma, Sketch, or Adobe Creative Suite",
+      "Strong portfolio showcasing user-centered design process",
+      "Experience with user research and usability testing",
+      "Knowledge of design systems and component libraries",
+      "Understanding of web and mobile design best practices",
+      "Excellent presentation and communication skills"
+    ],
+    "responsibilities": [
+      "Conduct user research and create user personas",
+      "Design wireframes, prototypes, and high-fidelity mockups",
+      "Collaborate with clients to understand business requirements",
+      "Present design concepts and iterate based on feedback",
+      "Work with developers to ensure design implementation",
+      "Maintain and evolve design systems",
+      "Stay current with UX trends and best practices"
+    ],
+    "benefits": [
+      "Competitive hourly rates",
+      "Flexible schedule and remote work",
+      "Opportunity to work with diverse clients",
+      "Professional development support",
+      "Access to premium design tools",
+      "Collaborative and creative team environment",
+      "Potential for long-term partnerships"
+    ],
+    "postedDate": "2024-01-13T09:15:00Z",
+    "applicationCount": 35
+  },
+  {
+    "Id": 4,
+    "title": "Data Scientist",
+    "company": "DataVision Analytics",
+    "location": "Austin, TX",
+    "jobType": "full-time",
+    "experienceLevel": "senior",
+    "salaryRange": {
+      "min": 130000,
+      "max": 160000
+    },
+    "description": "Join our data science team to build machine learning models and analytics solutions that drive strategic business decisions. You'll work with large-scale datasets, develop predictive models, and collaborate with stakeholders to translate complex data insights into actionable recommendations.\n\nWe're looking for a data scientist who combines strong technical skills with business acumen and can communicate complex findings to both technical and non-technical audiences.\n\nThis role offers the opportunity to work on cutting-edge AI/ML projects while making a direct impact on business outcomes in a fast-growing company.",
+    "requirements": [
+      "5+ years of data science experience",
+      "Advanced degree in Data Science, Statistics, or related field",
+      "Proficiency in Python, R, and SQL",
+      "Experience with machine learning frameworks (scikit-learn, TensorFlow)",
+      "Strong statistical analysis and modeling skills",
+      "Experience with big data technologies (Spark, Hadoop)",
+      "Excellent data visualization and communication skills"
+    ],
+    "responsibilities": [
+      "Develop and deploy machine learning models",
+      "Analyze large datasets to identify patterns and insights",
+      "Collaborate with business stakeholders on data strategy",
+      "Build automated reporting and monitoring systems",
+      "Present findings to executive leadership",
+      "Mentor junior data scientists and analysts",
+      "Stay current with ML/AI developments and tools"
+    ],
+    "benefits": [
+      "Competitive salary and annual bonuses",
+      "Comprehensive benefits package",
+      "401(k) with generous company matching",
+      "Professional development and conference attendance",
+      "Flexible work arrangements",
+      "Modern office with collaborative spaces",
+      "Health and wellness programs"
+    ],
+    "postedDate": "2024-01-12T16:45:00Z",
+    "applicationCount": 24
+  },
+  {
+    "Id": 5,
+    "title": "Frontend Developer",
+    "company": "WebCraft Studios",
+    "location": "Los Angeles, CA",
+    "jobType": "full-time",
+    "experienceLevel": "entry",
+    "salaryRange": {
+      "min": 70000,
+      "max": 85000
+    },
+    "description": "We're looking for an enthusiastic Frontend Developer to join our creative team building beautiful and functional web experiences. You'll work on a variety of client projects ranging from e-commerce sites to interactive web applications.\n\nThis is an excellent opportunity for a junior developer who wants to grow their skills while working with experienced mentors and modern technologies. You'll be involved in all aspects of frontend development from initial concept to final deployment.\n\nWe value creativity, attention to detail, and a passion for creating exceptional user experiences. Our collaborative environment encourages learning and professional growth.",
+    "requirements": [
+      "1-3 years of frontend development experience",
+      "Proficiency in HTML, CSS, and JavaScript",
+      "Experience with React or Vue.js",
+      "Understanding of responsive design principles",
+      "Familiarity with version control (Git)",
+      "Basic knowledge of build tools and bundlers",
+      "Strong attention to detail and design sense"
+    ],
+    "responsibilities": [
+      "Develop responsive web applications and websites",
+      "Collaborate with designers to implement pixel-perfect UIs",
+      "Write clean, maintainable, and well-documented code",
+      "Optimize applications for maximum speed and scalability",
+      "Participate in code reviews and team meetings",
+      "Stay updated with latest frontend technologies",
+      "Work with backend developers to integrate APIs"
+    ],
+    "benefits": [
+      "Competitive entry-level salary",
+      "Health and dental insurance",
+      "Professional development budget",
+      "Flexible PTO policy",
+      "Modern office in creative district",
+      "Regular team building activities",
+      "Opportunity for rapid career growth"
+    ],
+    "postedDate": "2024-01-11T11:30:00Z",
+    "applicationCount": 67
+  },
+  {
+    "Id": 6,
+    "title": "DevOps Engineer",
+    "company": "CloudScale Systems",
+    "location": "Seattle, WA",
+    "jobType": "full-time",
+    "experienceLevel": "mid",
+    "salaryRange": {
+      "min": 105000,
+      "max": 130000
+    },
+    "description": "Join our infrastructure team as a DevOps Engineer and help build and maintain the cloud infrastructure that powers our applications. You'll work with modern DevOps tools and practices to ensure our systems are reliable, scalable, and secure.\n\nIn this role, you'll design CI/CD pipelines, manage Kubernetes clusters, implement monitoring solutions, and collaborate with development teams to streamline deployment processes.\n\nWe're looking for someone who is passionate about automation, infrastructure as code, and continuous improvement. This is a great opportunity to work with cutting-edge technologies in a supportive team environment.",
+    "requirements": [
+      "3-5 years of DevOps or infrastructure experience",
+      "Experience with AWS, Azure, or GCP",
+      "Proficiency with Docker and Kubernetes",
+      "Strong knowledge of CI/CD tools (Jenkins, GitLab CI, etc.)",
+      "Experience with Infrastructure as Code (Terraform, Ansible)",
+      "Understanding of monitoring and logging tools",
+      "Scripting skills in Python, Bash, or PowerShell"
+    ],
+    "responsibilities": [
+      "Design and maintain CI/CD pipelines",
+      "Manage cloud infrastructure and Kubernetes clusters",
+      "Implement monitoring, logging, and alerting systems",
+      "Automate deployment and operational processes",
+      "Ensure security best practices across infrastructure",
+      "Collaborate with development teams on deployment strategies",
+      "Participate in incident response and on-call rotation"
+    ],
+    "benefits": [
+      "Competitive salary with annual reviews",
+      "Comprehensive health benefits",
+      "401(k) retirement plan with matching",
+      "Flexible work schedule and remote options",
+      "Professional certification reimbursement",
+      "Latest technology and equipment",
+      "Collaborative and innovative work environment"
+    ],
+    "postedDate": "2024-01-10T13:20:00Z",
+    "applicationCount": 31
+  },
+  {
+    "Id": 7,
+    "title": "Marketing Manager",
+    "company": "GrowthHack Marketing",
+    "location": "Chicago, IL",
+    "jobType": "full-time",
+    "experienceLevel": "mid",
+    "salaryRange": {
+      "min": 80000,
+      "max": 100000
+    },
+    "description": "We're seeking a dynamic Marketing Manager to lead our client marketing campaigns and drive measurable business growth. You'll develop comprehensive marketing strategies, manage multi-channel campaigns, and analyze performance to optimize results.\n\nIn this role, you'll work with a talented team of creatives, analysts, and strategists to deliver innovative marketing solutions for our diverse client portfolio. You'll have the opportunity to work with both B2B and B2C brands across various industries.\n\nWe're looking for a strategic thinker who can balance creativity with data-driven decision making and has a passion for staying ahead of marketing trends.",
+    "requirements": [
+      "3-5 years of marketing experience",
+      "Bachelor's degree in Marketing, Business, or related field",
+      "Experience with digital marketing channels (SEO, SEM, social media)",
+      "Proficiency with marketing analytics tools (Google Analytics, etc.)",
+      "Strong project management and communication skills",
+      "Experience with marketing automation platforms",
+      "Creative thinking and problem-solving abilities"
+    ],
+    "responsibilities": [
+      "Develop and execute comprehensive marketing strategies",
+      "Manage multi-channel marketing campaigns",
+      "Analyze campaign performance and provide insights",
+      "Collaborate with creative team on campaign development",
+      "Manage client relationships and presentations",
+      "Stay current with marketing trends and best practices",
+      "Lead cross-functional project teams"
+    ],
+    "benefits": [
+      "Competitive salary with performance incentives",
+      "Health, dental, and vision insurance",
+      "Flexible PTO and work-from-home options",
+      "Professional development opportunities",
+      "Agency environment with diverse clients",
+      "Regular team events and company outings",
+      "Downtown office with modern amenities"
+    ],
+    "postedDate": "2024-01-09T15:45:00Z",
+    "applicationCount": 45
+  },
+  {
+    "Id": 8,
+    "title": "Full Stack Developer",
+    "company": "StartupLab",
+    "location": "Remote",
+    "jobType": "freelance",
+    "experienceLevel": "mid",
+    "salaryRange": {
+      "min": 60,
+      "max": 80
+    },
+    "description": "We're looking for a skilled Full Stack Developer to join our team on exciting startup projects. You'll work on end-to-end development of web applications using modern technologies like React, Node.js, and cloud platforms.\n\nThis freelance position offers great flexibility and the opportunity to work with innovative startups across various industries. You'll be involved in all phases of development from initial prototyping to production deployment.\n\nIdeal for developers who want variety in their work, the opportunity to learn new technologies, and the flexibility of remote work while building impactful products.",
+    "requirements": [
+      "3+ years of full stack development experience",
+      "Proficiency in React, Node.js, and modern JavaScript",
+      "Experience with databases (PostgreSQL, MongoDB)",
+      "Knowledge of RESTful APIs and GraphQL",
+      "Familiarity with cloud platforms and deployment",
+      "Strong problem-solving and debugging skills",
+      "Excellent communication for remote collaboration"
+    ],
+    "responsibilities": [
+      "Develop full stack web applications from concept to deployment",
+      "Build responsive frontend interfaces using React",
+      "Design and implement backend APIs and services",
+      "Integrate third-party services and APIs",
+      "Collaborate with designers and product managers",
+      "Optimize application performance and user experience",
+      "Maintain code quality and documentation"
+    ],
+    "benefits": [
+      "Competitive hourly rates",
+      "Flexible schedule and fully remote work",
+      "Opportunity to work with innovative startups",
+      "Diverse project portfolio",
+      "Long-term partnership opportunities",
+      "Access to latest development tools",
+      "Professional growth and learning opportunities"
+    ],
+    "postedDate": "2024-01-08T10:15:00Z",
+    "applicationCount": 52
+  },
+  {
+    "Id": 9,
+    "title": "Business Analyst",
+    "company": "ConsultPro Solutions",
+    "location": "Dallas, TX",
+    "jobType": "full-time",
+    "experienceLevel": "entry",
+    "salaryRange": {
+      "min": 65000,
+      "max": 75000
+    },
+    "description": "Join our consulting team as a Business Analyst and help clients optimize their business processes and drive operational efficiency. You'll work on diverse projects ranging from process improvement to digital transformation initiatives.\n\nThis role offers excellent training and mentorship opportunities, allowing you to develop strong analytical and consulting skills while working with experienced professionals and prestigious clients.\n\nWe're looking for a recent graduate or early-career professional who is analytical, detail-oriented, and excited about solving complex business problems.",
+    "requirements": [
+      "Bachelor's degree in Business, Economics, or related field",
+      "0-2 years of business analysis or consulting experience",
+      "Strong analytical and problem-solving skills",
+      "Proficiency in Excel and data analysis tools",
+      "Excellent written and verbal communication skills",
+      "Understanding of business process modeling",
+      "Ability to work with clients and stakeholders"
+    ],
+    "responsibilities": [
+      "Analyze business processes and identify improvement opportunities",
+      "Gather and document business requirements",
+      "Create process maps and workflow diagrams",
+      "Conduct stakeholder interviews and workshops",
+      "Prepare client presentations and reports",
+      "Support project management activities",
+      "Assist in change management and training initiatives"
+    ],
+    "benefits": [
+      "Competitive entry-level salary",
+      "Comprehensive training program",
+      "Health and retirement benefits",
+      "Professional development opportunities",
+      "Exposure to diverse industries and clients",
+      "Clear career advancement path",
+      "Collaborative and supportive team environment"
+    ],
+    "postedDate": "2024-01-07T12:30:00Z",
+    "applicationCount": 38
+  },
+  {
+    "Id": 10,
+    "title": "Mobile App Developer",
+    "company": "AppVenture Mobile",
+    "location": "Miami, FL",
+    "jobType": "part-time",
+    "experienceLevel": "mid",
+    "salaryRange": {
+      "min": 35,
+      "max": 50
+    },
+    "description": "We're seeking a talented Mobile App Developer to join our part-time team developing innovative iOS and Android applications. You'll work on exciting consumer and enterprise mobile apps using React Native and native development technologies.\n\nThis part-time position is perfect for experienced developers looking for flexibility while working on cutting-edge mobile projects. You'll collaborate with our design and product teams to create exceptional mobile experiences.\n\nIdeal for developers who want to balance other commitments while staying engaged with mobile development and working with a dynamic, creative team.",
+    "requirements": [
+      "3+ years of mobile app development experience",
+      "Proficiency in React Native or native iOS/Android development",
+      "Experience with mobile app deployment and app stores",
+      "Understanding of mobile UI/UX best practices",
+      "Knowledge of mobile performance optimization",
+      "Familiarity with mobile testing frameworks",
+      "Strong communication skills for remote collaboration"
+    ],
+    "responsibilities": [
+      "Develop iOS and Android mobile applications",
+      "Collaborate with design team on UI implementation",
+      "Integrate mobile apps with backend services",
+      "Optimize app performance and user experience",
+      "Participate in app store deployment process",
+      "Debug and troubleshoot mobile app issues",
+      "Stay current with mobile development trends"
+    ],
+    "benefits": [
+      "Competitive part-time hourly rate",
+      "Flexible schedule (20-25 hours per week)",
+      "Remote work opportunities",
+      "Opportunity to work on innovative mobile apps",
+      "Professional development support",
+      "Collaborative team environment",
+      "Potential for full-time opportunities"
+    ],
+    "postedDate": "2024-01-06T14:20:00Z",
+    "applicationCount": 29
+  },
+  {
+    "Id": 11,
+    "title": "Cybersecurity Specialist",
+    "company": "SecureNet Technologies",
+    "location": "Washington, DC",
+    "jobType": "full-time",
+    "experienceLevel": "senior",
+    "salaryRange": {
+      "min": 120000,
+      "max": 150000
+    },
+    "description": "Join our cybersecurity team to protect critical infrastructure and data for government and enterprise clients. You'll design and implement security solutions, conduct risk assessments, and respond to security incidents.\n\nThis role requires security clearance eligibility and offers the opportunity to work on high-impact security projects that protect national interests and critical business operations.\n\nWe're looking for an experienced security professional who stays current with emerging threats and has a passion for continuous learning in the rapidly evolving cybersecurity landscape.",
+    "requirements": [
+      "5+ years of cybersecurity experience",
+      "Security certifications (CISSP, CISM, CEH, etc.)",
+      "Experience with security frameworks (NIST, ISO 27001)",
+      "Knowledge of network security and penetration testing",
+      "Experience with SIEM and security monitoring tools",
+      "Understanding of cloud security best practices",
+      "Eligibility for security clearance"
+    ],
+    "responsibilities": [
+      "Design and implement security architectures",
+      "Conduct security assessments and penetration testing",
+      "Monitor and respond to security incidents",
+      "Develop security policies and procedures",
+      "Provide security training and awareness programs",
+      "Collaborate with IT teams on security implementation",
+      "Stay current with threat intelligence and security trends"
+    ],
+    "benefits": [
+      "Competitive salary with security clearance premium",
+      "Comprehensive benefits package",
+      "401(k) with company matching",
+      "Professional certification reimbursement",
+      "Flexible work arrangements",
+      "Opportunity to work on critical national projects",
+      "Continuous learning and development opportunities"
+    ],
+    "postedDate": "2024-01-05T09:45:00Z",
+    "applicationCount": 18
+  },
+  {
+    "Id": 12,
+    "title": "Technical Writer",
+    "company": "DocuTech Solutions",
+    "location": "Remote",
+    "jobType": "contract",
+    "experienceLevel": "mid",
+    "salaryRange": {
+      "min": 45,
+      "max": 60
+    },
+    "description": "We're seeking an experienced Technical Writer to create clear, comprehensive documentation for software products and APIs. You'll work with engineering teams to translate complex technical concepts into user-friendly documentation.\n\nThis contract position offers the flexibility of remote work while contributing to important documentation projects that help users and developers successfully implement our clients' technologies.\n\nIdeal for writers who have both technical aptitude and excellent communication skills, with experience in software documentation and developer tools.",
+    "requirements": [
+      "3+ years of technical writing experience",
+      "Experience documenting software products and APIs",
+      "Proficiency with documentation tools (GitBook, Confluence, etc.)",
+      "Understanding of software development processes",
+      "Strong writing and editing skills",
+      "Ability to work with engineering teams",
+      "Experience with markup languages (Markdown, HTML)"
+    ],
+    "responsibilities": [
+      "Create and maintain technical documentation",
+      "Collaborate with engineers to gather technical information",
+      "Write API documentation and developer guides",
+      "Update existing documentation based on product changes",
+      "Create user manuals and help content",
+      "Ensure documentation accuracy and clarity",
+      "Establish documentation standards and processes"
+    ],
+    "benefits": [
+      "Competitive hourly rates",
+      "Fully remote work environment",
+      "Flexible schedule and project-based work",
+      "Opportunity to work with cutting-edge technologies",
+      "Professional development support",
+      "Diverse client portfolio",
+      "Long-term contract opportunities"
+    ],
+    "postedDate": "2024-01-04T16:10:00Z",
+    "applicationCount": 33
+  }
+]

@@ -1,0 +1,47 @@
+[
+  {
+    "Id": 1,
+    "candidateId": "1",
+    "jobId": "1",
+    "coverLetter": "I am excited to apply for the Senior Software Engineer position at TechFlow Solutions. With over 8 years of experience in software development and expertise in React, Node.js, and AWS, I am confident I can contribute significantly to your team.\n\nIn my current role at TechCorp Inc, I have led the development of microservices architecture serving over 2 million users and mentored junior developers. I am particularly drawn to TechFlow's focus on innovation and technical excellence, which aligns perfectly with my career goals.\n\nI would welcome the opportunity to discuss how my experience and passion for software engineering can benefit your team. Thank you for your consideration.",
+    "status": "applied",
+    "appliedDate": "2024-01-16T09:30:00Z",
+    "lastUpdated": "2024-01-16T09:30:00Z"
+  },
+  {
+    "Id": 2,
+    "candidateId": "1",
+    "jobId": "4",
+    "coverLetter": "I am writing to express my strong interest in the Data Scientist position at DataVision Analytics. While my background is primarily in software engineering, I have developed significant experience with data analysis and machine learning through various projects.\n\nI have worked extensively with Python for data processing and have implemented several ML models in production environments. My technical background combined with my problem-solving skills makes me well-suited for transitioning into data science.\n\nI am eager to bring my technical expertise and analytical mindset to your data science team. Thank you for considering my application.",
+    "status": "under-review",
+    "appliedDate": "2024-01-14T14:15:00Z",
+    "lastUpdated": "2024-01-17T10:20:00Z"
+  },
+  {
+    "Id": 3,
+    "candidateId": "1",
+    "jobId": "8",
+    "coverLetter": "I am interested in the Full Stack Developer freelance opportunity at StartupLab. My experience building end-to-end web applications using React and Node.js aligns perfectly with your requirements.\n\nI have successfully delivered multiple projects for startups and understand the fast-paced environment and need for rapid prototyping. My ability to work independently and communicate effectively makes me ideal for remote freelance work.\n\nI would love to discuss how I can contribute to your exciting startup projects. Looking forward to hearing from you.",
+    "status": "interview",
+    "appliedDate": "2024-01-10T11:45:00Z",
+    "lastUpdated": "2024-01-18T16:30:00Z"
+  },
+  {
+    "Id": 4,
+    "candidateId": "1",
+    "jobId": "6",
+    "coverLetter": "I am applying for the DevOps Engineer position at CloudScale Systems. My experience with AWS, Docker, and CI/CD pipelines makes me a strong candidate for this role.\n\nIn my current position, I have implemented automated deployment processes and managed cloud infrastructure for high-traffic applications. I am passionate about automation and infrastructure as code, which aligns with your team's focus.\n\nI would appreciate the opportunity to discuss how my DevOps experience can contribute to your infrastructure team.",
+    "status": "rejected",
+    "appliedDate": "2024-01-08T13:20:00Z",
+    "lastUpdated": "2024-01-15T09:45:00Z"
+  },
+  {
+    "Id": 5,
+    "candidateId": "1",
+    "jobId": "2",
+    "coverLetter": "I am excited to apply for the Product Manager position at InnovateNow Inc. While my background is in engineering, I have gained significant product experience through collaborating with product teams and understanding user needs.\n\nMy technical background gives me a unique perspective on product development, and I am skilled at translating technical concepts for non-technical stakeholders. I am eager to transition into product management and believe this role would be perfect for that career move.\n\nThank you for considering my application. I look forward to discussing how my technical expertise and product passion can benefit your team.",
+    "status": "accepted",
+    "appliedDate": "2024-01-12T10:30:00Z",
+    "lastUpdated": "2024-01-19T14:15:00Z"
+  }
+]
