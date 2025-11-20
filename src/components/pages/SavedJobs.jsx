@@ -95,6 +95,7 @@ if (savedJobs.length === 0) {
     );
   }
 return (
+    <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2 flex items-center gap-2">
           <ApperIcon name="Bookmark" className="text-primary" size={32} />

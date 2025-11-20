@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { candidateService } from "@/services/api/candidateService";
+import { toast } from "react-hot-toast";
 import ApperIcon from "@/components/ApperIcon";
 import ProfileSection from "@/components/molecules/ProfileSection";
 import Loading from "@/components/ui/Loading";
@@ -10,7 +11,6 @@ import Card from "@/components/atoms/Card";
 import Badge from "@/components/atoms/Badge";
 import Input from "@/components/atoms/Input";
 import Textarea from "@/components/atoms/Textarea";
-import { toast } from "react-hot-toast";
 
 const Profile = () => {
   const [candidate, setCandidate] = useState(null);
@@ -20,10 +20,11 @@ const Profile = () => {
   const [formData, setFormData] = useState({});
   const [resumeFile, setResumeFile] = useState(null);
 
-  const loadProfile = async () => {
+const loadProfile = async () => {
     setLoading(true);
     setError("");
-const profile = await candidateService.getProfile();
+    try {
+      const profile = await candidateService.getProfile();
       if (profile) {
         setCandidate(profile);
         setFormData(profile);
@@ -47,9 +48,10 @@ const profile = await candidateService.getProfile();
       setError("Failed to load profile. Please try again.");
     } finally {
       setLoading(false);
+} finally {
+      setLoading(false);
     }
   };
-
   useEffect(() => {
     loadProfile();
   }, []);

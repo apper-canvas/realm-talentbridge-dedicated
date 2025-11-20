@@ -62,9 +62,8 @@ useEffect(() => {
       }
     };
     
-    loadSavedJobs();
+loadSavedJobs();
   }, []);
-}, []);
 
   useEffect(() => {
     let filtered = [...jobs];
