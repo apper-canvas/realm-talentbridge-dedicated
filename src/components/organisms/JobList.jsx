@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { jobService } from "@/services/api/jobService";
+import { savedJobService } from "@/services/api/savedJobService";
+import ApperIcon from "@/components/ApperIcon";
 import JobCard from "@/components/molecules/JobCard";
 import Loading from "@/components/ui/Loading";
-import ErrorView from "@/components/ui/ErrorView";
 import Empty from "@/components/ui/Empty";
+import ErrorView from "@/components/ui/ErrorView";
 import Button from "@/components/atoms/Button";
-import ApperIcon from "@/components/ApperIcon";
-import { jobService } from "@/services/api/jobService";
 
-const JobList = ({ searchTerm, filters }) => {
-  const [jobs, setJobs] = useState([]);
+const JobList = ({ searchTerm, filters, onRemoveFromSaved, savedJobs }) => {
+const [jobs, setJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [savedJobIds, setSavedJobIds] = useState([]);
   const jobsPerPage = 9;
 
   const loadJobs = async () => {
@@ -28,8 +30,35 @@ const JobList = ({ searchTerm, filters }) => {
     }
   };
 
+const handleSaveToggle = async (jobId) => {
+    try {
+      if (savedJobIds.includes(jobId)) {
+        await savedJobService.removeFromSaved(jobId);
+        setSavedJobIds(prev => prev.filter(id => id !== jobId));
+      } else {
+        await savedJobService.saveJob(jobId);
+        setSavedJobIds(prev => [...prev, jobId]);
+      }
+    } catch (error) {
+      console.error('Failed to toggle saved job:', error);
+    }
+  };
+
   useEffect(() => {
     loadJobs();
+  }, []);
+
+  useEffect(() => {
+    const loadSavedJobs = async () => {
+      try {
+        const savedJobs = await savedJobService.getSavedJobs();
+        setSavedJobIds(savedJobs.map(job => job.Id));
+      } catch (error) {
+        console.error('Failed to load saved jobs:', error);
+      }
+    };
+    
+    loadSavedJobs();
   }, []);
 
   useEffect(() => {
@@ -178,9 +207,16 @@ const JobList = ({ searchTerm, filters }) => {
       </div>
 
       {/* Job Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {paginatedJobs.map((job) => (
-          <JobCard key={job.Id} job={job} />
+<JobCard 
+            key={job.Id} 
+            job={job} 
+            isSaved={savedJobIds.includes(job.Id)}
+            onSaveToggle={handleSaveToggle}
+            onRemoveFromSaved={onRemoveFromSaved}
+            showRemoveButton={savedJobs}
+          />
         ))}
       </div>
 

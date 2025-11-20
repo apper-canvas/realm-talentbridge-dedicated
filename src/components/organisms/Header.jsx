@@ -8,8 +8,9 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const navigation = [
+const navigation = [
     { name: "Browse Jobs", href: "/", icon: "Search" },
+    { name: "Saved Jobs", href: "/saved-jobs", icon: "Bookmark" },
     { name: "My Profile", href: "/profile", icon: "User" },
     { name: "My Applications", href: "/applications", icon: "FileText" },
     { name: "Post Job", href: "/post-job", icon: "Plus" }
