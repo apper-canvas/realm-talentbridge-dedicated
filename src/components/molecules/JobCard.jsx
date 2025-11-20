@@ -1,12 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 import Badge from "@/components/atoms/Badge";
 import Card from "@/components/atoms/Card";
 import { formatDistanceToNow } from "date-fns";
 
-const JobCard = ({ job }) => {
+const JobCard = ({ job, onToggleSave, isSaved = false }) => {
   const navigate = useNavigate();
 
   const handleViewDetails = () => {
@@ -57,7 +58,37 @@ const JobCard = ({ job }) => {
   return (
     <Card hover className="p-6">
       <div className="flex flex-col h-full">
-        <div className="flex items-start justify-between mb-4">
+<div className="flex items-start justify-between mb-4">
+          <div className="flex-1">
+            <h3 className="text-lg font-semibold text-gray-900 mb-1">{job.title}</h3>
+            <p className="text-gray-600 mb-2">{job.company}</p>
+          </div>
+          
+          {/* Bookmark Button */}
+          {onToggleSave && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onToggleSave(job.Id);
+                toast.success(isSaved ? "Job removed from saved jobs" : "Job saved for later");
+              }}
+              className={`p-2 rounded-full transition-colors duration-200 ${
+                isSaved 
+                  ? 'text-primary hover:bg-orange-50' 
+                  : 'text-gray-400 hover:text-primary hover:bg-orange-50'
+              }`}
+              aria-label={isSaved ? "Remove from saved jobs" : "Save job"}
+            >
+              <ApperIcon 
+                name={isSaved ? "Bookmark" : "Bookmark"} 
+                size={20}
+                className={isSaved ? "fill-current" : ""}
+              />
+            </button>
+          )}
+        </div>
+        
+        <div className="mb-4">
           <div className="flex-1 min-w-0">
             <h3 className="text-xl font-semibold text-gray-900 mb-2 line-clamp-2">
               {job.title}
