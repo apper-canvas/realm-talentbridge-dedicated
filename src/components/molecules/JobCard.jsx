@@ -58,11 +58,10 @@ const JobCard = ({ job, onToggleSave, isSaved = false }) => {
   return (
     <Card hover className="p-6">
       <div className="flex flex-col h-full">
-<div className="flex items-start justify-between mb-4">
-          <div className="flex-1">
-            <p className="text-gray-600 mb-2">{job.company}</p>
-          </div>
-          
+<h3 className="text-lg font-semibold text-gray-900 mb-1 group-hover:text-primary transition-colors duration-200">
+            {job.title}
+          </h3>
+          <div className="flex items-center text-gray-600 mb-3">
           {/* Bookmark Button */}
           {onToggleSave && (
             <button
