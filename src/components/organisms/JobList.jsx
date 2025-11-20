@@ -357,5 +357,3 @@ const RecommendationJobCard = ({ job, onSaveToggle, isSaved }) => {
 };
 
 export default JobList;
-
-export default JobList;
