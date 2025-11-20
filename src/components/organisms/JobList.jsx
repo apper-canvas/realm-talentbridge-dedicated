@@ -33,10 +33,10 @@ const [jobs, setJobs] = useState([]);
 const handleSaveToggle = async (jobId) => {
     try {
       if (savedJobIds.includes(jobId)) {
-        await savedJobService.removeFromSaved(jobId);
+        await savedJobService.unsave(jobId);
         setSavedJobIds(prev => prev.filter(id => id !== jobId));
       } else {
-        await savedJobService.saveJob(jobId);
+        await savedJobService.save(jobId);
         setSavedJobIds(prev => [...prev, jobId]);
       }
     } catch (error) {
@@ -48,11 +48,11 @@ const handleSaveToggle = async (jobId) => {
     loadJobs();
   }, []);
 
-  useEffect(() => {
+useEffect(() => {
     const loadSavedJobs = async () => {
       try {
-        const savedJobs = await savedJobService.getSavedJobs();
-        setSavedJobIds(savedJobs.map(job => job.Id));
+        const savedJobIds = await savedJobService.getAll();
+        setSavedJobIds(savedJobIds);
       } catch (error) {
         console.error('Failed to load saved jobs:', error);
       }
