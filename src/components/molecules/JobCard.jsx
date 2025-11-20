@@ -58,35 +58,7 @@ const JobCard = ({ job, onToggleSave, isSaved = false }) => {
   return (
     <Card hover className="p-6">
       <div className="flex flex-col h-full">
-<h3 className="text-lg font-semibold text-gray-900 mb-1 group-hover:text-primary transition-colors duration-200">
-            {job.title}
-          </h3>
-          <div className="flex items-center text-gray-600 mb-3">
-          {/* Bookmark Button */}
-          {onToggleSave && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onToggleSave(job.Id);
-                toast.success(isSaved ? "Job removed from saved jobs" : "Job saved for later");
-              }}
-              className={`p-2 rounded-full transition-colors duration-200 ${
-                isSaved 
-                  ? 'text-primary hover:bg-orange-50' 
-                  : 'text-gray-400 hover:text-primary hover:bg-orange-50'
-              }`}
-              aria-label={isSaved ? "Remove from saved jobs" : "Save job"}
-            >
-              <ApperIcon 
-                name={isSaved ? "Bookmark" : "Bookmark"} 
-                size={20}
-                className={isSaved ? "fill-current" : ""}
-              />
-            </button>
-          )}
-        </div>
-        
-        <div className="mb-4">
+<div className="flex items-start justify-between mb-4">
           <div className="flex-1 min-w-0">
             <h3 className="text-xl font-semibold text-gray-900 mb-2 line-clamp-2">
               {job.title}
@@ -100,15 +72,40 @@ const JobCard = ({ job, onToggleSave, isSaved = false }) => {
               <span>{job.location}</span>
             </div>
           </div>
-          <div className="ml-4 text-right">
-            <div className="text-lg font-semibold text-primary mb-1">
-              {formatSalary(job.salaryRange)}
+          <div className="flex items-start gap-4">
+            <div className="text-right">
+              <div className="text-lg font-semibold text-primary mb-1">
+                {formatSalary(job.salaryRange)}
+              </div>
+              <div className="text-sm text-gray-500">
+                {formatDistanceToNow(new Date(job.postedDate), { addSuffix: true })}
+              </div>
             </div>
-            <div className="text-sm text-gray-500">
-              {formatDistanceToNow(new Date(job.postedDate), { addSuffix: true })}
-            </div>
+            {/* Bookmark Button */}
+            {onToggleSave && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onToggleSave(job.Id);
+                  toast.success(isSaved ? "Job removed from saved jobs" : "Job saved for later");
+                }}
+                className={`p-2 rounded-full transition-colors duration-200 ${
+                  isSaved 
+                    ? 'text-primary hover:bg-orange-50' 
+                    : 'text-gray-400 hover:text-primary hover:bg-orange-50'
+                }`}
+                aria-label={isSaved ? "Remove from saved jobs" : "Save job"}
+              >
+                <ApperIcon 
+                  name={isSaved ? "Bookmark" : "Bookmark"} 
+                  size={20}
+                  className={isSaved ? "fill-current" : ""}
+                />
+              </button>
+            )}
           </div>
         </div>
+        
 
         <div className="flex flex-wrap gap-2 mb-4">
           <Badge variant={getJobTypeVariant(job.jobType)}>
