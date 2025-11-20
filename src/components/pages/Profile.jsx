@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { candidateService } from "@/services/api/candidateService";
+import candidateService from "@/services/api/candidateService";
 import { toast } from "react-hot-toast";
 import ApperIcon from "@/components/ApperIcon";
 import ProfileSection from "@/components/molecules/ProfileSection";
@@ -12,6 +12,7 @@ import Badge from "@/components/atoms/Badge";
 import Input from "@/components/atoms/Input";
 import Textarea from "@/components/atoms/Textarea";
 
+
 const Profile = () => {
   const [candidate, setCandidate] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -20,7 +21,7 @@ const Profile = () => {
   const [formData, setFormData] = useState({});
   const [resumeFile, setResumeFile] = useState(null);
 
-const loadProfile = async () => {
+  const loadProfile = async () => {
     setLoading(true);
     setError("");
     try {
@@ -46,10 +47,11 @@ const loadProfile = async () => {
       }
     } catch (err) {
       setError("Failed to load profile. Please try again.");
-} finally {
+    } finally {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     loadProfile();
   }, []);
@@ -125,7 +127,7 @@ const loadProfile = async () => {
       ...formData,
       education: currentEducation.filter((_, i) => i !== index)
     });
-};
+  };
 
   const handleResumeUpload = async (file) => {
     if (file) {
@@ -161,7 +163,7 @@ const loadProfile = async () => {
       setFormData({ ...formData, ...parsedData });
       toast.success("Resume uploaded and profile auto-populated!");
     }
-};
+  };
 
   if (loading) {
     return <Loading />;
@@ -197,7 +199,8 @@ const loadProfile = async () => {
 
     return Math.round((completed / total) * 100);
   };
-return (
+
+  return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-100">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
@@ -216,235 +219,236 @@ return (
             </div>
           </div>
 
-        <div className="space-y-8">
-          {/* Personal Information */}
-          <ProfileSection
-            title="Personal Information"
-            icon="User"
-            isEditing={editingSections.personal}
-            onEdit={() => handleEdit("personal")}
-            onSave={() => handleSave("personal")}
-            onCancel={() => handleCancel("personal")}
-          >
-            {editingSections.personal ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Input
-                  label="Full Name"
-                  value={formData.fullName || ""}
-                  onChange={(e) => handleInputChange("fullName", e.target.value)}
-                  placeholder="Enter your full name"
-                />
-                <Input
-                  label="Email"
-                  type="email"
-                  value={formData.email || ""}
-                  onChange={(e) => handleInputChange("email", e.target.value)}
-                  placeholder="Enter your email"
-                />
-                <Input
-                  label="Phone"
-                  value={formData.phone || ""}
-                  onChange={(e) => handleInputChange("phone", e.target.value)}
-                  placeholder="Enter your phone number"
-                />
-                <Input
-                  label="Location"
-                  value={formData.location || ""}
-                  onChange={(e) => handleInputChange("location", e.target.value)}
-                  placeholder="City, State"
-                />
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Full Name</label>
-                  <p className="text-gray-900 mt-1">{candidate?.fullName || "Not provided"}</p>
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Email</label>
-                  <p className="text-gray-900 mt-1">{candidate?.email || "Not provided"}</p>
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Phone</label>
-                  <p className="text-gray-900 mt-1">{candidate?.phone || "Not provided"}</p>
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Location</label>
-                  <p className="text-gray-900 mt-1">{candidate?.location || "Not provided"}</p>
-                </div>
-              </div>
-            )}
-          </ProfileSection>
-
-{/* Resume Upload */}
-          <Card>
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-gray-900 flex items-center">
-                <ApperIcon name="FileText" className="w-5 h-5 mr-2 text-primary" />
-                Resume & Auto-Population
-              </h3>
-              
-              {formData?.resumeUrl ? (
-                <div className="flex items-center justify-between p-4 bg-green-50 border border-green-200 rounded-lg">
-                  <div className="flex items-center">
-                    <ApperIcon name="File" className="w-5 h-5 text-green-600 mr-3" />
-                    <div>
-                      <p className="font-medium text-green-900">Resume uploaded & parsed</p>
-                      <p className="text-sm text-green-700">{formData.resumeUrl}</p>
-                    </div>
-                  </div>
-                  <Button variant="outline" size="sm">
-                    <ApperIcon name="Download" className="w-4 h-4 mr-2" />
-                    Download
-                  </Button>
+          <div className="space-y-8">
+            {/* Personal Information */}
+            <ProfileSection
+              title="Personal Information"
+              icon="User"
+              isEditing={editingSections.personal}
+              onEdit={() => handleEdit("personal")}
+              onSave={() => handleSave("personal")}
+              onCancel={() => handleCancel("personal")}
+            >
+              {editingSections.personal ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <Input
+                    label="Full Name"
+                    value={formData.fullName || ""}
+                    onChange={(e) => handleInputChange("fullName", e.target.value)}
+                    placeholder="Enter your full name"
+                  />
+                  <Input
+                    label="Email"
+                    type="email"
+                    value={formData.email || ""}
+                    onChange={(e) => handleInputChange("email", e.target.value)}
+                    placeholder="Enter your email"
+                  />
+                  <Input
+                    label="Phone"
+                    value={formData.phone || ""}
+                    onChange={(e) => handleInputChange("phone", e.target.value)}
+                    placeholder="Enter your phone number"
+                  />
+                  <Input
+                    label="Location"
+                    value={formData.location || ""}
+                    onChange={(e) => handleInputChange("location", e.target.value)}
+                    placeholder="City, State"
+                  />
                 </div>
               ) : (
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
-                  <ApperIcon name="Upload" className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">Upload your resume</h3>
-                  <p className="text-gray-600 mb-4">PDF files only, max 10MB. We'll automatically populate your profile!</p>
-                  <input
-                    type="file"
-                    accept=".pdf"
-                    onChange={(e) => handleResumeUpload(e.target.files[0])}
-                    className="hidden"
-                    id="resume-upload"
-                  />
-                  <label htmlFor="resume-upload">
-                    <Button as="span" className="cursor-pointer">
-                      <ApperIcon name="Upload" className="w-4 h-4 mr-2" />
-                      Choose File
-                    </Button>
-                  </label>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="text-sm font-medium text-gray-700">Full Name</label>
+                    <p className="text-gray-900 mt-1">{candidate?.fullName || "Not provided"}</p>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-gray-700">Email</label>
+                    <p className="text-gray-900 mt-1">{candidate?.email || "Not provided"}</p>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-gray-700">Phone</label>
+                    <p className="text-gray-900 mt-1">{candidate?.phone || "Not provided"}</p>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-gray-700">Location</label>
+                    <p className="text-gray-900 mt-1">{candidate?.location || "Not provided"}</p>
+                  </div>
                 </div>
               )}
-            </div>
-          </Card>
+            </ProfileSection>
 
-          {/* Profile Summary */}
-          <ProfileSection
-            title="Profile Summary"
-            icon="FileText"
-            isEditing={editingSections.summary}
-            onEdit={() => handleEdit("summary")}
-            onSave={() => handleSave("summary")}
-            onCancel={() => handleCancel("summary")}
-          >
-            {editingSections.summary ? (
-              <Textarea
-                label="About You"
-                value={formData.profileSummary || ""}
-                onChange={(e) => handleInputChange("profileSummary", e.target.value)}
-                placeholder="Write a brief summary about yourself, your experience, and career goals..."
-                rows={6}
-              />
-            ) : (
-              <p className="text-gray-700 leading-relaxed">
-                {candidate?.profileSummary || "No profile summary added yet."}
-              </p>
-            )}
-          </ProfileSection>
-
-          {/* Skills */}
-          <ProfileSection
-            title="Skills"
-            icon="Award"
-            isEditing={editingSections.skills}
-            onEdit={() => handleEdit("skills")}
-            onSave={() => handleSave("skills")}
-            onCancel={() => handleCancel("skills")}
-          >
-            {editingSections.skills ? (
-              <SkillsEditor
-                skills={formData.skills || []}
-                onAdd={(skill) => handleArrayAdd("skills", skill)}
-                onRemove={(index) => handleArrayRemove("skills", index)}
-              />
-            ) : (
-<div className="flex flex-wrap gap-2">
-                {candidate?.skills && candidate.skills.length > 0 ? (
-                  candidate.skills.map((skill, index) => (
-                    <Badge key={index} variant="secondary">
-                      {skill}
-                    </Badge>
-                  ))
-                ) : (
-                  <p className="text-gray-500">No skills added yet.</p>
-                )}
-              </div>
-            )}
-          </ProfileSection>
-
-          {/* Experience */}
-          <ProfileSection
-            title="Work Experience"
-            icon="Briefcase"
-            isEditing={editingSections.experience}
-            onEdit={() => handleEdit("experience")}
-            onSave={() => handleSave("experience")}
-            onCancel={() => handleCancel("experience")}
-          >
-            {editingSections.experience ? (
-              <ExperienceEditor
-                experience={formData.experience || []}
-                onAdd={handleExperienceAdd}
-                onRemove={handleExperienceRemove}
-              />
-            ) : (
-<div className="space-y-6">
-                {candidate?.experience && candidate.experience.length > 0 ? (
-                  candidate.experience.map((exp, index) => (
-                    <div key={index} className="border-l-4 border-primary pl-4">
-                      <h4 className="font-semibold text-gray-900">{exp.position}</h4>
-                      <p className="text-primary font-medium">{exp.company}</p>
-                      <p className="text-sm text-gray-600 mb-2">
-                        {exp.startDate} - {exp.current ? "Present" : exp.endDate}
-                      </p>
-                      {exp.description && (
-                        <p className="text-gray-700">{exp.description}</p>
-                      )}
+            {/* Resume Upload */}
+            <Card>
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-gray-900 flex items-center">
+                  <ApperIcon name="FileText" className="w-5 h-5 mr-2 text-primary" />
+                  Resume & Auto-Population
+                </h3>
+                
+                {formData?.resumeUrl ? (
+                  <div className="flex items-center justify-between p-4 bg-green-50 border border-green-200 rounded-lg">
+                    <div className="flex items-center">
+                      <ApperIcon name="File" className="w-5 h-5 text-green-600 mr-3" />
+                      <div>
+                        <p className="font-medium text-green-900">Resume uploaded & parsed</p>
+                        <p className="text-sm text-green-700">{formData.resumeUrl}</p>
+                      </div>
                     </div>
-                  ))
+                    <Button variant="outline" size="sm">
+                      <ApperIcon name="Download" className="w-4 h-4 mr-2" />
+                      Download
+                    </Button>
+                  </div>
                 ) : (
-                  <p className="text-gray-500">No work experience added yet.</p>
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                    <ApperIcon name="Upload" className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                    <h3 className="text-lg font-medium text-gray-900 mb-2">Upload your resume</h3>
+                    <p className="text-gray-600 mb-4">PDF files only, max 10MB. We'll automatically populate your profile!</p>
+                    <input
+                      type="file"
+                      accept=".pdf"
+                      onChange={(e) => handleResumeUpload(e.target.files[0])}
+                      className="hidden"
+                      id="resume-upload"
+                    />
+                    <label htmlFor="resume-upload">
+                      <Button as="span" className="cursor-pointer">
+                        <ApperIcon name="Upload" className="w-4 h-4 mr-2" />
+                        Choose File
+                      </Button>
+                    </label>
+                  </div>
                 )}
               </div>
-            )}
-          </ProfileSection>
+            </Card>
 
-          {/* Education */}
-          <ProfileSection
-            title="Education"
-            icon="GraduationCap"
-            isEditing={editingSections.education}
-            onEdit={() => handleEdit("education")}
-            onSave={() => handleSave("education")}
-            onCancel={() => handleCancel("education")}
-          >
-            {editingSections.education ? (
-              <EducationEditor
-                education={formData.education || []}
-                onAdd={handleEducationAdd}
-                onRemove={handleEducationRemove}
-              />
-            ) : (
-<div className="space-y-4">
-                {candidate?.education && candidate.education.length > 0 ? (
-                  candidate.education.map((edu, index) => (
-                    <div key={index} className="border-l-4 border-primary pl-4">
-                      <h4 className="font-semibold text-gray-900">{edu.degree}</h4>
-                      <p className="text-primary font-medium">{edu.institution}</p>
-                      <p className="text-sm text-gray-600">
-                        {edu.field} • {edu.graduationYear}
-                      </p>
-                    </div>
-                  ))
-                ) : (
-                  <p className="text-gray-500">No education information added yet.</p>
-                )}
-              </div>
-            )}
-          </ProfileSection>
+            {/* Profile Summary */}
+            <ProfileSection
+              title="Profile Summary"
+              icon="FileText"
+              isEditing={editingSections.summary}
+              onEdit={() => handleEdit("summary")}
+              onSave={() => handleSave("summary")}
+              onCancel={() => handleCancel("summary")}
+            >
+              {editingSections.summary ? (
+                <Textarea
+                  label="About You"
+                  value={formData.profileSummary || ""}
+                  onChange={(e) => handleInputChange("profileSummary", e.target.value)}
+                  placeholder="Write a brief summary about yourself, your experience, and career goals..."
+                  rows={6}
+                />
+              ) : (
+                <p className="text-gray-700 leading-relaxed">
+                  {candidate?.profileSummary || "No profile summary added yet."}
+                </p>
+              )}
+            </ProfileSection>
+
+            {/* Skills */}
+            <ProfileSection
+              title="Skills"
+              icon="Award"
+              isEditing={editingSections.skills}
+              onEdit={() => handleEdit("skills")}
+              onSave={() => handleSave("skills")}
+              onCancel={() => handleCancel("skills")}
+            >
+              {editingSections.skills ? (
+                <SkillsEditor
+                  skills={formData.skills || []}
+                  onAdd={(skill) => handleArrayAdd("skills", skill)}
+                  onRemove={(index) => handleArrayRemove("skills", index)}
+                />
+              ) : (
+                <div className="flex flex-wrap gap-2">
+                  {candidate?.skills && candidate.skills.length > 0 ? (
+                    candidate.skills.map((skill, index) => (
+                      <Badge key={index} variant="secondary">
+                        {skill}
+                      </Badge>
+                    ))
+                  ) : (
+                    <p className="text-gray-500">No skills added yet.</p>
+                  )}
+                </div>
+              )}
+            </ProfileSection>
+
+            {/* Experience */}
+            <ProfileSection
+              title="Work Experience"
+              icon="Briefcase"
+              isEditing={editingSections.experience}
+              onEdit={() => handleEdit("experience")}
+              onSave={() => handleSave("experience")}
+              onCancel={() => handleCancel("experience")}
+            >
+              {editingSections.experience ? (
+                <ExperienceEditor
+                  experience={formData.experience || []}
+                  onAdd={handleExperienceAdd}
+                  onRemove={handleExperienceRemove}
+                />
+              ) : (
+                <div className="space-y-6">
+                  {candidate?.experience && candidate.experience.length > 0 ? (
+                    candidate.experience.map((exp, index) => (
+                      <div key={index} className="border-l-4 border-primary pl-4">
+                        <h4 className="font-semibold text-gray-900">{exp.position}</h4>
+                        <p className="text-primary font-medium">{exp.company}</p>
+                        <p className="text-sm text-gray-600 mb-2">
+                          {exp.startDate} - {exp.current ? "Present" : exp.endDate}
+                        </p>
+                        {exp.description && (
+                          <p className="text-gray-700">{exp.description}</p>
+                        )}
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-gray-500">No work experience added yet.</p>
+                  )}
+                </div>
+              )}
+            </ProfileSection>
+
+            {/* Education */}
+            <ProfileSection
+              title="Education"
+              icon="GraduationCap"
+              isEditing={editingSections.education}
+              onEdit={() => handleEdit("education")}
+              onSave={() => handleSave("education")}
+              onCancel={() => handleCancel("education")}
+            >
+              {editingSections.education ? (
+                <EducationEditor
+                  education={formData.education || []}
+                  onAdd={handleEducationAdd}
+                  onRemove={handleEducationRemove}
+                />
+              ) : (
+                <div className="space-y-4">
+                  {candidate?.education && candidate.education.length > 0 ? (
+                    candidate.education.map((edu, index) => (
+                      <div key={index} className="border-l-4 border-primary pl-4">
+                        <h4 className="font-semibold text-gray-900">{edu.degree}</h4>
+                        <p className="text-primary font-medium">{edu.institution}</p>
+                        <p className="text-sm text-gray-600">
+                          {edu.field} • {edu.graduationYear}
+                        </p>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-gray-500">No education information added yet.</p>
+                  )}
+                </div>
+              )}
+            </ProfileSection>
+          </div>
         </div>
       </div>
     </div>
