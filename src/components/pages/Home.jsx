@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { recommendationService } from "@/services/api/recommendationService";
 import ApperIcon from "@/components/ApperIcon";
 import FilterPanel from "@/components/molecules/FilterPanel";
 import SearchBar from "@/components/molecules/SearchBar";
@@ -16,8 +17,30 @@ const Home = () => {
     experienceLevel: "",
     salaryRange: ""
   });
+  const [recommendations, setRecommendations] = useState([]);
+  const [loadingRecommendations, setLoadingRecommendations] = useState(false);
+  const [profileComplete, setProfileComplete] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
+// Load personalized recommendations
+  const loadRecommendations = async () => {
+    setLoadingRecommendations(true);
+    try {
+      const [recs, isComplete] = await Promise.all([
+        recommendationService.getRecommendations(6),
+        recommendationService.isProfileCompleteForRecommendations()
+      ]);
+      setRecommendations(recs);
+      setProfileComplete(isComplete);
+    } catch (error) {
+      console.error('Error loading recommendations:', error);
+    } finally {
+      setLoadingRecommendations(false);
+    }
+  };
 
+  useEffect(() => {
+    loadRecommendations();
+  }, []);
   const handleSearch = (term) => {
     setSearchTerm(term);
   };
@@ -107,7 +130,76 @@ return (
 
           {/* Job Listings */}
           <div className="flex-1 min-w-0">
-            <JobList searchTerm={searchTerm} filters={filters} />
+{/* Recommendations Section */}
+            {(recommendations.length > 0 || !profileComplete) && (
+              <div className="mb-12">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-2xl font-bold text-gray-900 flex items-center">
+                    <ApperIcon name="Target" className="w-6 h-6 mr-2 text-primary" />
+                    Jobs Recommended for You
+                  </h2>
+                  {profileComplete && recommendations.length > 0 && (
+                    <button 
+                      onClick={loadRecommendations}
+                      className="text-primary hover:text-orange-600 text-sm font-medium flex items-center"
+                    >
+                      <ApperIcon name="RefreshCw" className="w-4 h-4 mr-1" />
+                      Refresh
+                    </button>
+                  )}
+                </div>
+
+                {!profileComplete ? (
+                  <div className="bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-200 rounded-lg p-6 text-center">
+                    <ApperIcon name="User" className="w-12 h-12 text-orange-500 mx-auto mb-3" />
+                    <h3 className="text-lg font-semibold text-orange-900 mb-2">Complete Your Profile for Better Recommendations</h3>
+                    <p className="text-orange-700 mb-4">
+                      Add your skills, experience, and preferences to get personalized job recommendations that match your career goals.
+                    </p>
+                    <button 
+                      onClick={() => navigate('/profile')}
+                      className="bg-primary hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-medium transition-colors"
+                    >
+                      Complete Profile
+                    </button>
+                  </div>
+                ) : (
+                  <div>
+                    {loadingRecommendations ? (
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {[1, 2, 3].map(i => (
+                          <div key={i} className="bg-white border border-gray-200 rounded-lg p-6 animate-pulse">
+                            <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+                            <div className="h-4 bg-gray-200 rounded w-1/2 mb-4"></div>
+                            <div className="h-20 bg-gray-200 rounded mb-4"></div>
+                            <div className="h-4 bg-gray-200 rounded w-full"></div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : recommendations.length > 0 ? (
+                      <JobList jobs={recommendations} isRecommendationMode={true} />
+                    ) : (
+                      <div className="text-center py-12">
+                        <ApperIcon name="Target" className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2">No Recommendations Available</h3>
+                        <p className="text-gray-600">
+                          Update your profile with more skills and preferences to get better job recommendations.
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* All Jobs Section */}
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                <ApperIcon name="Briefcase" className="w-6 h-6 mr-2 text-primary" />
+                All Available Jobs
+              </h2>
+              <JobList searchTerm={searchTerm} filters={filters} />
+            </div>
           </div>
         </div>
       </div>
