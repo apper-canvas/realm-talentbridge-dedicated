@@ -4,9 +4,8 @@ import Badge from '@/components/atoms/Badge';
 import { notificationService } from '@/services/api/notificationService';
 
 const NotificationIcon = ({ onClick }) => {
-  const [unreadCount, setUnreadCount] = useState(0);
   const [loading, setLoading] = useState(false);
-
+  const [unreadCount, setUnreadCount] = useState(0);
   const loadUnreadCount = async () => {
     setLoading(true);
     try {
@@ -26,11 +25,6 @@ const NotificationIcon = ({ onClick }) => {
     const interval = setInterval(loadUnreadCount, 30000);
     return () => clearInterval(interval);
   }, []);
-
-  // Expose refresh method for parent components
-  React.useImperativeHandle(React.forwardRef(() => null), () => ({
-    refreshCount: loadUnreadCount
-  }));
 
   return (
     <button

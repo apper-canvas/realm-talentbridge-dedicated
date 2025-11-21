@@ -5,9 +5,8 @@ import Button from "@/components/atoms/Button";
 import NotificationIcon from "@/components/molecules/NotificationIcon";
 import NotificationCenter from "@/components/organisms/NotificationCenter";
 const Header = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isNotificationCenterOpen, setIsNotificationCenterOpen] = useState(false);
-  const [unreadCount, setUnreadCount] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
 const navigation = [
@@ -94,10 +93,9 @@ const navigation = [
         )}
 
         {/* Notification Center Modal */}
-        <NotificationCenter
+<NotificationCenter
           isOpen={isNotificationCenterOpen}
           onClose={() => setIsNotificationCenterOpen(false)}
-          onUnreadCountChange={setUnreadCount}
         />
       </div>
 </header>
