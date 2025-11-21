@@ -83,10 +83,14 @@ const PostJob = () => {
         location: formData.location.trim(),
         jobType: formData.jobType,
         experienceLevel: formData.experienceLevel,
-        salaryRange: {
-          min: formData.salaryMin ? parseInt(formData.salaryMin) : null,
-          max: formData.salaryMax ? parseInt(formData.salaryMax) : null
-        },
+salaryRange: (() => {
+          const min = formData.salaryMin ? parseInt(formData.salaryMin) : null;
+          const max = formData.salaryMax ? parseInt(formData.salaryMax) : null;
+          if (min && max) return `${min}-${max}`;
+          if (min) return `${min}-${min}`;
+          if (max) return `${max}-${max}`;
+          return null;
+        })(),
         description: formData.description.trim(),
         requirements: formData.requirements.split("\n").filter(req => req.trim()),
         responsibilities: formData.responsibilities.split("\n").filter(resp => resp.trim()),
