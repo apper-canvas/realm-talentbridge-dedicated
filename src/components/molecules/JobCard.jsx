@@ -138,11 +138,17 @@ const JobCard = ({ job, onSaveToggle, onRemoveFromSaved, isSaved = false, showRe
         
 
         <div className="flex flex-wrap gap-2 mb-4">
-          <Badge variant={getJobTypeVariant(job.jobType)}>
-            {job.jobType.charAt(0).toUpperCase() + job.jobType.slice(1).replace('-', ' ')}
+<Badge variant={getJobTypeVariant(job.jobType)}>
+            {job.jobType && typeof job.jobType === 'string' 
+              ? job.jobType.charAt(0).toUpperCase() + job.jobType.slice(1).replace('-', ' ')
+              : 'Not specified'
+            }
           </Badge>
           <Badge variant={getExperienceVariant(job.experienceLevel)}>
-            {job.experienceLevel.charAt(0).toUpperCase() + job.experienceLevel.slice(1)} Level
+            {job.experienceLevel && typeof job.experienceLevel === 'string'
+              ? job.experienceLevel.charAt(0).toUpperCase() + job.experienceLevel.slice(1) + ' Level'
+              : 'Not specified'
+            }
           </Badge>
         </div>
 
