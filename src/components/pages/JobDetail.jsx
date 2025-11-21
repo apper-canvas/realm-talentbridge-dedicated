@@ -1,14 +1,30 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import ApperIcon from "@/components/ApperIcon";
-import Button from "@/components/atoms/Button";
-import Badge from "@/components/atoms/Badge";
-import Card from "@/components/atoms/Card";
-import Loading from "@/components/ui/Loading";
-import ErrorView from "@/components/ui/ErrorView";
-import ApplicationModal from "@/components/organisms/ApplicationModal";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { jobService } from "@/services/api/jobService";
 import { formatDistanceToNow } from "date-fns";
+import ApperIcon from "@/components/ApperIcon";
+import Loading from "@/components/ui/Loading";
+import ErrorView from "@/components/ui/ErrorView";
+import Button from "@/components/atoms/Button";
+import Card from "@/components/atoms/Card";
+import Badge from "@/components/atoms/Badge";
+import ApplicationModal from "@/components/organisms/ApplicationModal";
+
+// Safe date formatting utility
+const safeDateFormat = (dateString) => {
+  if (!dateString) return "Recently posted";
+  
+  try {
+    const date = new Date(dateString);
+    // Check if date is valid
+    if (isNaN(date.getTime())) {
+      return "Recently posted";
+    }
+    return formatDistanceToNow(date, { addSuffix: true });
+  } catch (error) {
+    return "Recently posted";
+  }
+};
 
 const JobDetail = () => {
   const { id } = useParams();
@@ -137,12 +153,12 @@ const JobDetail = () => {
                   </div>
                   <div className="flex items-center text-gray-600">
                     <ApperIcon name="MapPin" className="w-5 h-5 mr-2" />
-                    <span>{job.location}</span>
+<span>{job.location}</span>
                   </div>
                   <div className="flex items-center text-gray-600">
                     <ApperIcon name="Calendar" className="w-5 h-5 mr-2" />
                     <span>
-                      Posted {formatDistanceToNow(new Date(job.postedDate), { addSuffix: true })}
+                      Posted {safeDateFormat(job.postedDate)}
                     </span>
                   </div>
                 </div>

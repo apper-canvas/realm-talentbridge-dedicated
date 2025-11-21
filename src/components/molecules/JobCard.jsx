@@ -2,6 +2,22 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { formatDistanceToNow } from "date-fns";
+
+// Safe date formatting utility
+const safeDateFormat = (dateString) => {
+  if (!dateString) return "Recently posted";
+  
+  try {
+    const date = new Date(dateString);
+    // Check if date is valid
+    if (isNaN(date.getTime())) {
+      return "Recently posted";
+    }
+    return formatDistanceToNow(date, { addSuffix: true });
+  } catch (error) {
+    return "Recently posted";
+  }
+};
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 import Card from "@/components/atoms/Card";
@@ -75,9 +91,9 @@ const JobCard = ({ job, onSaveToggle, onRemoveFromSaved, isSaved = false, showRe
             <div className="text-right">
               <div className="text-lg font-semibold text-primary mb-1">
                 {formatSalary(job.salaryRange)}
-              </div>
+</div>
               <div className="text-sm text-gray-500">
-                {formatDistanceToNow(new Date(job.postedDate), { addSuffix: true })}
+                {safeDateFormat(job.postedDate)}
               </div>
 </div>
           
