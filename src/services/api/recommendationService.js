@@ -267,4 +267,3 @@ class RecommendationService {
 }
 
 export const recommendationService = new RecommendationService();
-export const recommendationService = new RecommendationService();
