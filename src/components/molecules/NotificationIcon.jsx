@@ -3,34 +3,12 @@ import ApperIcon from '@/components/ApperIcon';
 import Badge from '@/components/atoms/Badge';
 import { notificationService } from '@/services/api/notificationService';
 
-const NotificationIcon = ({ onClick }) => {
-  const [loading, setLoading] = useState(false);
-  const [unreadCount, setUnreadCount] = useState(0);
-  const loadUnreadCount = async () => {
-    setLoading(true);
-    try {
-      const count = await notificationService.getUnreadCount();
-      setUnreadCount(count);
-    } catch (error) {
-      console.error('Error loading unread count:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    loadUnreadCount();
-    
-    // Poll for updates every 30 seconds
-    const interval = setInterval(loadUnreadCount, 30000);
-    return () => clearInterval(interval);
-  }, []);
+const NotificationIcon = ({ onClick, unreadCount = 0 }) => {
 
   return (
-    <button
+<button
       onClick={onClick}
       className="relative p-2 rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-all duration-200"
-      disabled={loading}
     >
       <ApperIcon name="Bell" className="w-5 h-5" />
       

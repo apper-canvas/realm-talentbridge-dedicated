@@ -7,6 +7,7 @@ import NotificationCenter from "@/components/organisms/NotificationCenter";
 const Header = () => {
 const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isNotificationCenterOpen, setIsNotificationCenterOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
 const navigation = [
@@ -55,8 +56,9 @@ const navigation = [
           </nav>
 
           {/* Notification Icon */}
-          <NotificationIcon 
+<NotificationIcon 
             onClick={() => setIsNotificationCenterOpen(true)}
+            unreadCount={unreadCount}
           />
           {/* Mobile menu button */}
 <button
@@ -96,6 +98,7 @@ const navigation = [
 <NotificationCenter
           isOpen={isNotificationCenterOpen}
           onClose={() => setIsNotificationCenterOpen(false)}
+          onUnreadCountChange={setUnreadCount}
         />
       </div>
 </header>
