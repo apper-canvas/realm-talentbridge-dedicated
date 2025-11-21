@@ -1,0 +1,150 @@
+{
+  "/": {
+    "allow": {
+      "when": {
+        "conditions": [
+          {
+            "label": "Homepage is public",
+            "rule": "public"
+          }
+        ]
+      }
+    }
+  },
+  "/login": {
+    "allow": {
+      "when": {
+        "conditions": [
+          {
+            "label": "Login page is public",
+            "rule": "public"
+          }
+        ]
+      }
+    }
+  },
+  "/signup": {
+    "allow": {
+      "when": {
+        "conditions": [
+          {
+            "label": "Signup page is public",
+            "rule": "public"
+          }
+        ]
+      }
+    }
+  },
+  "/callback": {
+    "allow": {
+      "when": {
+        "conditions": [
+          {
+            "label": "Callback page is public",
+            "rule": "public"
+          }
+        ]
+      }
+    }
+  },
+  "/error": {
+    "allow": {
+      "when": {
+        "conditions": [
+          {
+            "label": "Error page is public", 
+            "rule": "public"
+          }
+        ]
+      }
+    }
+  },
+  "/jobs/:id": {
+    "allow": {
+      "when": {
+        "conditions": [
+          {
+            "label": "Job details are public",
+            "rule": "public"
+          }
+        ]
+      }
+    }
+  },
+  "/profile": {
+    "allow": {
+      "when": {
+        "conditions": [
+          {
+            "label": "User must be logged in to view profile",
+            "rule": "authenticated"
+          }
+        ]
+      },
+      "redirectOnDeny": "/login"
+    }
+  },
+  "/applications": {
+    "allow": {
+      "when": {
+        "conditions": [
+          {
+            "label": "User must be logged in to view applications",
+            "rule": "authenticated"
+          }
+        ]
+      },
+      "redirectOnDeny": "/login"
+    }
+  },
+  "/saved-jobs": {
+    "allow": {
+      "when": {
+        "conditions": [
+          {
+            "label": "User must be logged in to view saved jobs",
+            "rule": "authenticated"
+          }
+        ]
+      },
+      "redirectOnDeny": "/login"
+    }
+  },
+  "/post-job": {
+    "allow": {
+      "when": {
+        "conditions": [
+          {
+            "label": "User must be logged in to post jobs",
+            "rule": "authenticated"
+          }
+        ]
+      },
+      "redirectOnDeny": "/login"
+    }
+  },
+  "/prompt-password/**/*": {
+    "allow": {
+      "when": {
+        "conditions": [
+          {
+            "label": "Password prompt is public",
+            "rule": "public"
+          }
+        ]
+      }
+    }
+  },
+  "/reset-password/**/*": {
+    "allow": {
+      "when": {
+        "conditions": [
+          {
+            "label": "Password reset is public",
+            "rule": "public"
+          }
+        ]
+      }
+    }
+  }
+}

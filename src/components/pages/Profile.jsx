@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { candidateService } from "@/services/api/candidateService";
 import { toast } from "react-toastify";
+import ApperFileFieldComponent from "@/components/atoms/FileUploader";
 import ApperIcon from "@/components/ApperIcon";
-import ProfileSection from "@/components/molecules/ProfileSection";
 import Loading from "@/components/ui/Loading";
 import ErrorView from "@/components/ui/ErrorView";
-import Select from "@/components/atoms/Select";
+import Textarea from "@/components/atoms/Textarea";
 import Button from "@/components/atoms/Button";
+import Input from "@/components/atoms/Input";
 import Card from "@/components/atoms/Card";
 import Badge from "@/components/atoms/Badge";
-import Input from "@/components/atoms/Input";
-import Textarea from "@/components/atoms/Textarea";
-
+import ProfileSection from "@/components/molecules/ProfileSection";
 
 const Profile = () => {
   const [candidate, setCandidate] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [editingSections, setEditingSections] = useState({});
   const [formData, setFormData] = useState({});
-  const [resumeFile, setResumeFile] = useState(null);
-
+  const [saving, setSaving] = useState(false);
+  const [uploadingResume, setUploadingResume] = useState(false);
+  const [resumeFiles, setResumeFiles] = useState([]);
   const loadProfile = async () => {
     setLoading(true);
     setError("");
@@ -32,15 +32,15 @@ const Profile = () => {
       } else {
         // Create initial profile
         const initialProfile = {
-          fullName: "",
-          email: "",
-          phone: "",
-          location: "",
-          skills: [],
-          experience: [],
-          education: [],
-          preferredJobTypes: [],
-          resumeUrl: ""
+fullName_c: "",
+          email_c: "",
+          phone_c: "",
+          location_c: "",
+          skills_c: "",
+          experience_c: "",
+          education_c: "",
+          preferredJobTypes_c: "",
+          resumeUrl_c: []
         };
         setCandidate(initialProfile);
         setFormData(initialProfile);
@@ -67,6 +67,18 @@ const Profile = () => {
 
   const handleSave = async (section) => {
     try {
+// Get files from file uploader if resume section is being edited
+      if (editingSections.resume && window.ApperSDK?.ApperFileUploader) {
+        try {
+          const files = await window.ApperSDK.ApperFileUploader.FileField.getFiles('resumeUrl_c');
+          if (files && files.length > 0) {
+            formData.resumeUrl_c = files;
+          }
+        } catch (fileError) {
+          console.error('Error getting files:', fileError);
+        }
+      }
+
       const updatedCandidate = await candidateService.update(candidate.Id || 1, formData);
       setCandidate(updatedCandidate);
       setEditingSections({ ...editingSections, [section]: false });
@@ -132,7 +144,7 @@ const Profile = () => {
 const handleResumeUpload = async (file) => {
     if (file) {
       // Store the actual file for download functionality
-      setResumeFile(file);
+      setResumeFiles([file]);
       
       // Simulate file upload and resume parsing
       const resumeUrl = `uploads/${file.name}`;
@@ -144,8 +156,8 @@ const handleResumeUpload = async (file) => {
         email: formData.email || "john.doe@email.com", // Would be extracted from resume
         phone: formData.phone || "+1 (555) 123-4567", // Would be extracted from resume
         location: formData.location || "New York, NY", // Would be extracted from resume
-        skills: formData.skills.length > 0 ? formData.skills : ["JavaScript", "React", "Node.js"], // Would be extracted from resume
-        experience: formData.experience.length > 0 ? formData.experience : [
+        skills: formData.skills?.length > 0 ? formData.skills : ["JavaScript", "React", "Node.js"], // Would be extracted from resume
+        experience: formData.experience?.length > 0 ? formData.experience : [
           {
             company: "Tech Corp",
             position: "Software Developer",
@@ -153,7 +165,7 @@ const handleResumeUpload = async (file) => {
             description: "Developed web applications using React and Node.js"
           }
         ],
-        education: formData.education.length > 0 ? formData.education : [
+        education: formData.education?.length > 0 ? formData.education : [
           {
             institution: "University of Technology",
             degree: "Bachelor of Computer Science",
@@ -168,14 +180,15 @@ const handleResumeUpload = async (file) => {
     }
   };
 
-  const handleResumeDownload = () => {
+const handleResumeDownload = () => {
     try {
-      if (resumeFile) {
+      if (resumeFiles && resumeFiles.length > 0) {
         // Create blob URL and trigger download for uploaded file
-        const url = URL.createObjectURL(resumeFile);
+        const file = resumeFiles[0];
+        const url = URL.createObjectURL(file);
         const link = document.createElement('a');
         link.href = url;
-        link.download = resumeFile.name;
+        link.download = file.name;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -222,14 +235,20 @@ const handleResumeUpload = async (file) => {
     let completed = 0;
     let total = 8;
 
-    if (candidate.fullName) completed++;
-    if (candidate.email) completed++;
-    if (candidate.phone) completed++;
-    if (candidate.location) completed++;
-    if (candidate.profileSummary) completed++;
-    if (candidate.skills && candidate.skills.length > 0) completed++;
-    if (candidate.experience && candidate.experience.length > 0) completed++;
-    if (candidate.education && candidate.education.length > 0) completed++;
+if (candidate.fullName_c || candidate.fullName) completed++;
+    if (candidate.email_c || candidate.email) completed++;
+    if (candidate.phone_c || candidate.phone) completed++;
+    if (candidate.location_c || candidate.location) completed++;
+    if (candidate.profileSummary_c || candidate.profileSummary) completed++;
+    
+    const skills = candidate.skills_c || candidate.skills;
+    if (skills && (Array.isArray(skills) ? skills.length > 0 : skills.trim().length > 0)) completed++;
+    
+    const experience = candidate.experience_c || candidate.experience;
+    if (experience && (Array.isArray(experience) ? experience.length > 0 : experience.trim().length > 0)) completed++;
+    
+    const education = candidate.education_c || candidate.education;
+    if (education && (Array.isArray(education) ? education.length > 0 : education.trim().length > 0)) completed++;
 
     return Math.round((completed / total) * 100);
   };
@@ -263,102 +282,75 @@ const handleResumeUpload = async (file) => {
               onSave={() => handleSave("personal")}
               onCancel={() => handleCancel("personal")}
             >
-              {editingSections.personal ? (
+{editingSections.personal ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <Input
                     label="Full Name"
-                    value={formData.fullName || ""}
-                    onChange={(e) => handleInputChange("fullName", e.target.value)}
+                    value={formData.fullName_c || formData.fullName || ""}
+                    onChange={(e) => handleInputChange("fullName_c", e.target.value)}
                     placeholder="Enter your full name"
                   />
                   <Input
                     label="Email"
                     type="email"
-                    value={formData.email || ""}
-                    onChange={(e) => handleInputChange("email", e.target.value)}
+                    value={formData.email_c || formData.email || ""}
+                    onChange={(e) => handleInputChange("email_c", e.target.value)}
                     placeholder="Enter your email"
                   />
                   <Input
                     label="Phone"
-                    value={formData.phone || ""}
-                    onChange={(e) => handleInputChange("phone", e.target.value)}
+                    value={formData.phone_c || formData.phone || ""}
+                    onChange={(e) => handleInputChange("phone_c", e.target.value)}
                     placeholder="Enter your phone number"
                   />
                   <Input
                     label="Location"
-                    value={formData.location || ""}
-                    onChange={(e) => handleInputChange("location", e.target.value)}
-                    placeholder="City, State"
+                    value={formData.location_c || formData.location || ""}
+                    onChange={(e) => handleInputChange("location_c", e.target.value)}
                   />
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
+<div>
                     <label className="text-sm font-medium text-gray-700">Full Name</label>
-                    <p className="text-gray-900 mt-1">{candidate?.fullName || "Not provided"}</p>
+                    <p className="text-gray-900 mt-1">{candidate?.fullName_c || candidate?.fullName || "Not provided"}</p>
                   </div>
                   <div>
                     <label className="text-sm font-medium text-gray-700">Email</label>
-                    <p className="text-gray-900 mt-1">{candidate?.email || "Not provided"}</p>
+                    <p className="text-gray-900 mt-1">{candidate?.email_c || candidate?.email || "Not provided"}</p>
                   </div>
                   <div>
                     <label className="text-sm font-medium text-gray-700">Phone</label>
-                    <p className="text-gray-900 mt-1">{candidate?.phone || "Not provided"}</p>
+                    <p className="text-gray-900 mt-1">{candidate?.phone_c || candidate?.phone || "Not provided"}</p>
                   </div>
                   <div>
                     <label className="text-sm font-medium text-gray-700">Location</label>
-                    <p className="text-gray-900 mt-1">{candidate?.location || "Not provided"}</p>
+                    <p className="text-gray-900 mt-1">{candidate?.location_c || candidate?.location || "Not provided"}</p>
                   </div>
                 </div>
               )}
             </ProfileSection>
 
-            {/* Resume Upload */}
-<Card>
+{/* Resume Upload */}
+            <Card>
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold text-gray-900 flex items-center">
                   <ApperIcon name="FileText" className="w-5 h-5 mr-2 text-primary" />
                   Resume & Auto-Population
                 </h3>
                 
-                {formData?.resumeUrl ? (
-                  <div className="flex items-center justify-between p-4 bg-green-50 border border-green-200 rounded-lg">
-                    <div className="flex items-center">
-                      <ApperIcon name="File" className="w-5 h-5 text-green-600 mr-3" />
-                      <div>
-                        <p className="font-medium text-green-900">Resume uploaded & parsed</p>
-                        <p className="text-sm text-green-700">{formData.resumeUrl}</p>
-                      </div>
-                    </div>
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      onClick={handleResumeDownload}
-                    >
-                      <ApperIcon name="Download" className="w-4 h-4 mr-2" />
-                      Download
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
-                    <ApperIcon name="Upload" className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-medium text-gray-900 mb-2">Upload your resume</h3>
-                    <p className="text-gray-600 mb-4">PDF files only, max 10MB. We'll automatically populate your profile!</p>
-                    <input
-                      type="file"
-                      accept=".pdf"
-                      onChange={(e) => handleResumeUpload(e.target.files[0])}
-                      className="hidden"
-                      id="resume-upload"
-                    />
-                    <label htmlFor="resume-upload">
-                      <Button as="span" className="cursor-pointer">
-                        <ApperIcon name="Upload" className="w-4 h-4 mr-2" />
-                        Choose File
-                      </Button>
-                    </label>
-                  </div>
-                )}
+                <ApperFileFieldComponent
+                  elementId="resumeUrl_c"
+                  config={{
+                    fieldName: 'resumeUrl_c',
+                    fieldKey: 'resumeUrl_c',
+                    tableName: 'candidates_c',
+                    apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+                    apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY,
+                    existingFiles: candidate?.resumeUrl_c || [],
+                    fileCount: Array.isArray(candidate?.resumeUrl_c) ? candidate.resumeUrl_c.length : 0
+                  }}
+                />
               </div>
             </Card>
 
@@ -371,17 +363,17 @@ const handleResumeUpload = async (file) => {
               onSave={() => handleSave("summary")}
               onCancel={() => handleCancel("summary")}
             >
-              {editingSections.summary ? (
+{editingSections.summary ? (
                 <Textarea
                   label="About You"
-                  value={formData.profileSummary || ""}
-                  onChange={(e) => handleInputChange("profileSummary", e.target.value)}
+                  value={formData.profileSummary_c || formData.profileSummary || ""}
+                  onChange={(e) => handleInputChange("profileSummary_c", e.target.value)}
                   placeholder="Write a brief summary about yourself, your experience, and career goals..."
                   rows={6}
                 />
               ) : (
                 <p className="text-gray-700 leading-relaxed">
-                  {candidate?.profileSummary || "No profile summary added yet."}
+                  {candidate?.profileSummary_c || candidate?.profileSummary || "No profile summary added yet."}
                 </p>
               )}
             </ProfileSection>
@@ -396,22 +388,58 @@ const handleResumeUpload = async (file) => {
               onCancel={() => handleCancel("skills")}
             >
               {editingSections.skills ? (
-                <SkillsEditor
-                  skills={formData.skills || []}
-                  onAdd={(skill) => handleArrayAdd("skills", skill)}
-                  onRemove={(index) => handleArrayRemove("skills", index)}
+<SkillsEditor
+                  skills={(() => {
+                    const skills = formData.skills_c || formData.skills;
+                    if (typeof skills === 'string') {
+                      return skills.split(',').map(skill => skill.trim()).filter(skill => skill.length > 0);
+                    }
+                    return Array.isArray(skills) ? skills : [];
+                  })()}
+                  onAdd={(skill) => {
+                    const currentSkills = (() => {
+                      const skills = formData.skills_c || formData.skills;
+                      if (typeof skills === 'string') {
+                        return skills.split(',').map(skill => skill.trim()).filter(skill => skill.length > 0);
+                      }
+                      return Array.isArray(skills) ? skills : [];
+                    })();
+                    const newSkills = [...currentSkills, skill];
+                    handleInputChange("skills_c", newSkills.join(","));
+                  }}
+                  onRemove={(index) => {
+                    const currentSkills = (() => {
+                      const skills = formData.skills_c || formData.skills;
+                      if (typeof skills === 'string') {
+                        return skills.split(',').map(skill => skill.trim()).filter(skill => skill.length > 0);
+                      }
+                      return Array.isArray(skills) ? skills : [];
+                    })();
+                    const newSkills = currentSkills.filter((_, i) => i !== index);
+                    handleInputChange("skills_c", newSkills.join(","));
+                  }}
                 />
               ) : (
                 <div className="flex flex-wrap gap-2">
-                  {candidate?.skills && candidate.skills.length > 0 ? (
-                    candidate.skills.map((skill, index) => (
-                      <Badge key={index} variant="secondary">
-                        {skill}
-                      </Badge>
-                    ))
-                  ) : (
-                    <p className="text-gray-500">No skills added yet.</p>
-                  )}
+                  {(() => {
+                    const skills = candidate?.skills_c || candidate?.skills;
+                    if (typeof skills === 'string') {
+                      const skillArray = skills.split(',').map(skill => skill.trim()).filter(skill => skill.length > 0);
+                      return skillArray.length > 0 ? skillArray.map((skill, index) => (
+                        <Badge key={index} variant="secondary">
+                          {skill}
+                        </Badge>
+                      )) : <p className="text-gray-500">No skills added yet.</p>;
+                    } else if (Array.isArray(skills) && skills.length > 0) {
+                      return skills.map((skill, index) => (
+                        <Badge key={index} variant="secondary">
+                          {skill}
+                        </Badge>
+                      ));
+                    } else {
+                      return <p className="text-gray-500">No skills added yet.</p>;
+                    }
+                  })()}
                 </div>
               )}
             </ProfileSection>
@@ -424,31 +452,30 @@ const handleResumeUpload = async (file) => {
               onEdit={() => handleEdit("experience")}
               onSave={() => handleSave("experience")}
               onCancel={() => handleCancel("experience")}
-            >
+>
               {editingSections.experience ? (
-                <ExperienceEditor
-                  experience={formData.experience || []}
-                  onAdd={handleExperienceAdd}
-                  onRemove={handleExperienceRemove}
+                <Textarea
+                  label="Work Experience"
+                  value={formData.experience_c || formData.experience || ""}
+                  onChange={(e) => handleInputChange("experience_c", e.target.value)}
+                  placeholder="Enter your work experience (one per line)..."
+                  rows={6}
                 />
               ) : (
-                <div className="space-y-6">
-                  {candidate?.experience && candidate.experience.length > 0 ? (
-                    candidate.experience.map((exp, index) => (
-                      <div key={index} className="border-l-4 border-primary pl-4">
-                        <h4 className="font-semibold text-gray-900">{exp.position}</h4>
-                        <p className="text-primary font-medium">{exp.company}</p>
-                        <p className="text-sm text-gray-600 mb-2">
-                          {exp.startDate} - {exp.current ? "Present" : exp.endDate}
-                        </p>
-                        {exp.description && (
-                          <p className="text-gray-700">{exp.description}</p>
-                        )}
-                      </div>
-                    ))
-                  ) : (
-                    <p className="text-gray-500">No work experience added yet.</p>
-                  )}
+                <div className="space-y-4">
+                  {(() => {
+                    const experience = candidate?.experience_c || candidate?.experience;
+                    if (experience && experience.trim().length > 0) {
+                      const experienceLines = experience.split('\n').filter(line => line.trim().length > 0);
+                      return experienceLines.map((exp, index) => (
+                        <div key={index} className="border-l-4 border-primary pl-4">
+                          <p className="text-gray-700">{exp}</p>
+                        </div>
+                      ));
+                    } else {
+                      return <p className="text-gray-500">No experience added yet.</p>;
+                    }
+                  })()}
                 </div>
               )}
             </ProfileSection>
@@ -456,33 +483,35 @@ const handleResumeUpload = async (file) => {
             {/* Education */}
             <ProfileSection
               title="Education"
-              icon="GraduationCap"
+icon="GraduationCap"
               isEditing={editingSections.education}
               onEdit={() => handleEdit("education")}
               onSave={() => handleSave("education")}
               onCancel={() => handleCancel("education")}
             >
               {editingSections.education ? (
-                <EducationEditor
-                  education={formData.education || []}
-                  onAdd={handleEducationAdd}
-                  onRemove={handleEducationRemove}
+                <Textarea
+                  label="Education"
+                  value={formData.education_c || formData.education || ""}
+                  onChange={(e) => handleInputChange("education_c", e.target.value)}
+                  placeholder="Enter your education (one per line)..."
+                  rows={6}
                 />
               ) : (
                 <div className="space-y-4">
-                  {candidate?.education && candidate.education.length > 0 ? (
-                    candidate.education.map((edu, index) => (
-                      <div key={index} className="border-l-4 border-primary pl-4">
-                        <h4 className="font-semibold text-gray-900">{edu.degree}</h4>
-                        <p className="text-primary font-medium">{edu.institution}</p>
-                        <p className="text-sm text-gray-600">
-                          {edu.field} • {edu.graduationYear}
-                        </p>
-                      </div>
-                    ))
-                  ) : (
-                    <p className="text-gray-500">No education information added yet.</p>
-                  )}
+                  {(() => {
+                    const education = candidate?.education_c || candidate?.education;
+                    if (education && education.trim().length > 0) {
+                      const educationLines = education.split('\n').filter(line => line.trim().length > 0);
+                      return educationLines.map((edu, index) => (
+                        <div key={index} className="border-l-4 border-primary pl-4">
+                          <p className="text-gray-700">{edu}</p>
+                        </div>
+                      ));
+                    } else {
+                      return <p className="text-gray-500">No education added yet.</p>;
+                    }
+                  })()}
                 </div>
               )}
             </ProfileSection>
@@ -524,8 +553,8 @@ const SkillsEditor = ({ skills, onAdd, onRemove }) => {
         <Button onClick={handleAdd} disabled={!newSkill.trim()}>
           <ApperIcon name="Plus" className="w-4 h-4" />
         </Button>
-      </div>
-<div className="flex flex-wrap gap-2">
+</div>
+      <div className="flex flex-wrap gap-2">
         {skills.map((skill, index) => (
           <Badge key={index} variant="secondary" className="flex items-center">
             {skill}
@@ -573,8 +602,8 @@ const ExperienceEditor = ({ experience, onAdd, onRemove }) => {
 
   return (
     <div className="space-y-6">
-      {experience.map((exp, index) => (
-<div key={index} className="flex items-start justify-between p-4 bg-gray-50 rounded-lg">
+{experience.map((exp, index) => (
+        <div key={index} className="flex items-start justify-between p-4 bg-gray-50 rounded-lg">
           <div className="flex-1">
             <h4 className="font-semibold text-gray-900">{exp.position}</h4>
             <p className="text-primary font-medium">{exp.company}</p>
@@ -687,8 +716,8 @@ const EducationEditor = ({ education, onAdd, onRemove }) => {
 
   return (
     <div className="space-y-6">
-      {education.map((edu, index) => (
-<div key={index} className="flex items-start justify-between p-4 bg-gray-50 rounded-lg">
+{education.map((edu, index) => (
+        <div key={index} className="flex items-start justify-between p-4 bg-gray-50 rounded-lg">
           <div className="flex-1">
             <h4 className="font-semibold text-gray-900">{edu.degree}</h4>
             <p className="text-primary font-medium">{edu.institution}</p>

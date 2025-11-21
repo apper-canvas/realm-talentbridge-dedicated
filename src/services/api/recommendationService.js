@@ -2,18 +2,37 @@ import { jobService } from "@/services/api/jobService";
 import { candidateService } from "@/services/api/candidateService";
 import { notificationService } from "@/services/api/notificationService";
 
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
 class RecommendationService {
+  // Parse skills from database format (comma-separated string to array)
+  parseSkills(skillsString) {
+    if (!skillsString || typeof skillsString !== 'string') return [];
+    return skillsString.split(',').map(skill => skill.trim()).filter(skill => skill.length > 0);
+  }
+
+  // Parse job types from database format (comma-separated string to array)
+  parseJobTypes(jobTypesString) {
+    if (!jobTypesString || typeof jobTypesString !== 'string') return [];
+    return jobTypesString.split(',').map(type => type.trim()).filter(type => type.length > 0);
+  }
+
+  // Parse requirements from database format (newline-separated string to array)
+  parseRequirements(requirementsString) {
+    if (!requirementsString || typeof requirementsString !== 'string') return [];
+    return requirementsString.split('\n').map(req => req.trim()).filter(req => req.length > 0);
+  }
+
   // Calculate skill match percentage between candidate and job
   calculateSkillMatch(candidateSkills, jobRequirements) {
-    if (!candidateSkills || candidateSkills.length === 0) return 0;
-    if (!jobRequirements || jobRequirements.length === 0) return 0;
+    const skills = Array.isArray(candidateSkills) ? candidateSkills : this.parseSkills(candidateSkills);
+    const requirements = Array.isArray(jobRequirements) ? jobRequirements : this.parseRequirements(jobRequirements);
+    
+    if (!skills || skills.length === 0) return 0;
+    if (!requirements || requirements.length === 0) return 0;
 
-    const candidateSkillsLower = candidateSkills.map(skill => skill.toLowerCase());
+    const candidateSkillsLower = skills.map(skill => skill.toLowerCase());
     let matches = 0;
 
-    jobRequirements.forEach(requirement => {
+    requirements.forEach(requirement => {
       const requirementLower = requirement.toLowerCase();
       candidateSkillsLower.forEach(skill => {
         if (requirementLower.includes(skill) || skill.includes(requirementLower.split(' ')[0])) {
@@ -22,22 +41,31 @@ class RecommendationService {
       });
     });
 
-    return Math.min((matches / jobRequirements.length) * 100, 100);
+    return Math.min((matches / requirements.length) * 100, 100);
   }
 
   // Check experience level compatibility
   isExperienceLevelMatch(candidateExperience, jobExperienceLevel) {
-    if (!candidateExperience || candidateExperience.length === 0) return 0.5;
+    let experienceYears = 0;
     
-    const yearsOfExperience = candidateExperience.length;
+    // Try to parse experience data
+    if (typeof candidateExperience === 'string') {
+      // Count number of jobs/positions mentioned
+      const positions = candidateExperience.split('\n').filter(line => line.trim().length > 0);
+      experienceYears = positions.length;
+    } else if (Array.isArray(candidateExperience)) {
+      experienceYears = candidateExperience.length;
+    }
+
+    if (experienceYears === 0) return 0.5;
     
     switch (jobExperienceLevel) {
       case 'entry':
-        return yearsOfExperience <= 2 ? 1 : 0.7;
+        return experienceYears <= 2 ? 1 : 0.7;
       case 'mid':
-        return yearsOfExperience >= 2 && yearsOfExperience <= 5 ? 1 : 0.6;
+        return experienceYears >= 2 && experienceYears <= 5 ? 1 : 0.6;
       case 'senior':
-        return yearsOfExperience >= 4 ? 1 : 0.4;
+        return experienceYears >= 4 ? 1 : 0.4;
       default:
         return 0.8;
     }
@@ -47,10 +75,11 @@ class RecommendationService {
   isLocationMatch(candidateLocation, candidatePreferences, jobLocation) {
     if (!candidateLocation && !candidatePreferences) return 0.5;
 
-    const jobLocationLower = jobLocation.toLowerCase();
+    const jobLocationLower = (jobLocation || '').toLowerCase();
+    const preferences = Array.isArray(candidatePreferences) ? candidatePreferences : this.parseJobTypes(candidatePreferences);
     
     // Check if candidate prefers remote and job offers remote
-    if (candidatePreferences?.includes('remote') && jobLocationLower.includes('remote')) {
+    if (preferences?.includes('remote') && jobLocationLower.includes('remote')) {
       return 1;
     }
     
@@ -69,17 +98,30 @@ class RecommendationService {
 
   // Check job type preference match
   isJobTypeMatch(candidatePreferences, jobType) {
-    if (!candidatePreferences || candidatePreferences.length === 0) return 0.7;
+    const preferences = Array.isArray(candidatePreferences) ? candidatePreferences : this.parseJobTypes(candidatePreferences);
     
-    return candidatePreferences.includes(jobType) ? 1 : 0.5;
+    if (!preferences || preferences.length === 0) return 0.7;
+    
+    return preferences.includes(jobType) ? 1 : 0.5;
   }
 
   // Calculate overall job match score
   calculateJobScore(candidate, job) {
-    const skillMatch = this.calculateSkillMatch(candidate.skills, job.requirements);
-    const experienceMatch = this.isExperienceLevelMatch(candidate.experience, job.experienceLevel);
-    const locationMatch = this.isLocationMatch(candidate.location, candidate.preferredJobTypes, job.location);
-    const jobTypeMatch = this.isJobTypeMatch(candidate.preferredJobTypes, job.jobType);
+    // Use database field names with fallbacks to old field names
+    const candidateSkills = candidate.skills_c || candidate.skills || '';
+    const candidateExperience = candidate.experience_c || candidate.experience || '';
+    const candidateLocation = candidate.location_c || candidate.location || '';
+    const candidateJobTypes = candidate.preferredJobTypes_c || candidate.preferredJobTypes || '';
+
+    const jobRequirements = job.requirements_c || job.requirements || '';
+    const jobExperienceLevel = job.experienceLevel_c || job.experienceLevel || '';
+    const jobLocation = job.location_c || job.location || '';
+    const jobType = job.jobType_c || job.jobType || '';
+
+    const skillMatch = this.calculateSkillMatch(candidateSkills, jobRequirements);
+    const experienceMatch = this.isExperienceLevelMatch(candidateExperience, jobExperienceLevel);
+    const locationMatch = this.isLocationMatch(candidateLocation, candidateJobTypes, jobLocation);
+    const jobTypeMatch = this.isJobTypeMatch(candidateJobTypes, jobType);
 
     // Weighted scoring system
     const weights = {
@@ -137,9 +179,7 @@ class RecommendationService {
   }
 
   // Get personalized job recommendations for a candidate
-async getRecommendations(limit = 6) {
-    await delay(400);
-    
+  async getRecommendations(limit = 6) {
     try {
       const candidate = await candidateService.getProfile();
       if (!candidate) {
@@ -172,16 +212,19 @@ async getRecommendations(limit = 6) {
         try {
           // Check if we already have a recent notification for this job
           const existingNotifications = await notificationService.getNotificationsByType('job_match');
-          const hasRecentNotification = existingNotifications.some(n => 
-            n.jobId === job.Id && 
-            new Date(n.createdAt) > new Date(Date.now() - 24 * 60 * 60 * 1000) // Within 24 hours
-          );
+          const jobId = job.Id;
+          const hasRecentNotification = existingNotifications.some(n => {
+            const notificationJobId = n.jobId_c?.Id || n.jobId_c || n.jobId;
+            const notificationCreatedAt = n.createdAt_c || n.createdAt || n.CreatedOn;
+            return notificationJobId == jobId && 
+                   new Date(notificationCreatedAt) > new Date(Date.now() - 24 * 60 * 60 * 1000); // Within 24 hours
+          });
           
           if (!hasRecentNotification) {
             await notificationService.createJobMatchNotification(
               job.Id,
-              job.title,
-              job.company,
+              job.title_c || job.title || job.Name,
+              job.company_c || job.company,
               Math.round(job.matchScore)
             );
           }
@@ -203,17 +246,25 @@ async getRecommendations(limit = 6) {
       const candidate = await candidateService.getProfile();
       if (!candidate) return false;
 
-      const hasSkills = candidate.skills && candidate.skills.length > 0;
-      const hasExperience = candidate.experience && candidate.experience.length > 0;
-      const hasPreferences = candidate.preferredJobTypes && candidate.preferredJobTypes.length > 0;
-      const hasLocation = candidate.location && candidate.location.trim().length > 0;
+      // Use database field names with fallbacks
+      const skills = candidate.skills_c || candidate.skills;
+      const experience = candidate.experience_c || candidate.experience;
+      const preferences = candidate.preferredJobTypes_c || candidate.preferredJobTypes;
+      const location = candidate.location_c || candidate.location;
+
+      const hasSkills = skills && (Array.isArray(skills) ? skills.length > 0 : skills.trim().length > 0);
+      const hasExperience = experience && (Array.isArray(experience) ? experience.length > 0 : experience.trim().length > 0);
+      const hasPreferences = preferences && (Array.isArray(preferences) ? preferences.length > 0 : preferences.trim().length > 0);
+      const hasLocation = location && location.trim().length > 0;
 
       // Need at least skills and one other factor for decent recommendations
       return hasSkills && (hasExperience || hasPreferences || hasLocation);
     } catch (error) {
+      console.error('Error checking profile completeness:', error);
       return false;
     }
   }
 }
 
+export const recommendationService = new RecommendationService();
 export const recommendationService = new RecommendationService();

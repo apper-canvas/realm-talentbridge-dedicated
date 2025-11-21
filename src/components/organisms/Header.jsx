@@ -1,16 +1,22 @@
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useAuth } from "@/layouts/Root";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
-import NotificationIcon from "@/components/molecules/NotificationIcon";
 import NotificationCenter from "@/components/organisms/NotificationCenter";
-const Header = () => {
-const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+import NotificationIcon from "@/components/molecules/NotificationIcon";
+
+function Header() {
   const [isNotificationCenterOpen, setIsNotificationCenterOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
-const navigation = [
+  const { user, isAuthenticated } = useSelector(state => state.user);
+  const { logout } = useAuth();
+  
+  const navigation = [
     { name: "Browse Jobs", href: "/", icon: "Search" },
     { name: "Saved Jobs", href: "/saved-jobs", icon: "Bookmark" },
     { name: "My Profile", href: "/profile", icon: "User" },
@@ -55,11 +61,44 @@ const navigation = [
             ))}
           </nav>
 
-          {/* Notification Icon */}
-<NotificationIcon 
-            onClick={() => setIsNotificationCenterOpen(true)}
-            unreadCount={unreadCount}
-          />
+{/* Notification Icon */}
+          {isAuthenticated && (
+            <NotificationIcon 
+              onClick={() => setIsNotificationCenterOpen(true)}
+              unreadCount={unreadCount}
+            />
+          )}
+
+          {/* User Actions */}
+          {isAuthenticated ? (
+            <div className="flex items-center gap-4">
+              <span className="text-sm text-gray-600">
+                Welcome, {user?.firstName || user?.emailAddress || 'User'}
+              </span>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={logout}
+                className="flex items-center gap-2"
+              >
+                <ApperIcon name="LogOut" className="w-4 h-4" />
+                Logout
+              </Button>
+            </div>
+          ) : (
+            <div className="flex items-center gap-4">
+              <Link to="/login">
+                <Button variant="outline" size="sm">
+                  Login
+                </Button>
+              </Link>
+              <Link to="/signup">
+                <Button size="sm">
+                  Sign Up
+                </Button>
+              </Link>
+            </div>
+          )}
           {/* Mobile menu button */}
 <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
